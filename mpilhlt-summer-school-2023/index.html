@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content='  &lt;!-- .slide: data-background="./uploads/2e2f7ded-205d-4729-b109-482720a53686.png' name="description"/>
+<base href="./"/>
+<title>Constructing a Knowledge Graph for the History of (Socio-)Legal Scholarship (mpilhlt summer school) - HedgeDoc</title>
+<link href="./icons/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="./icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="./icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="./icons/site.webmanifest" rel="manifest"/>
+<link color="#b51f08" href="./icons/safari-pinned-tab.svg" rel="mask-icon"/>
+<link href="./icons/favicon.ico" rel="shortcut icon"/>
+<meta content="HedgeDoc - Ideas grow better together" name="apple-mobile-web-app-title"/>
+<meta content="HedgeDoc - Ideas grow better together" name="application-name"/>
+<meta content="#b51f08" name="msapplication-TileColor"/>
+<meta content="./icons/browserconfig.xml" name="msapplication-config"/>
+<meta content="#b51f08" name="theme-color"/>
+<link href="./build/reveal.js/css/reveal.css" rel="stylesheet"/>
+<link href="./build/emojify.js/dist/css/basic/emojify.min.css" rel="stylesheet"/>
+<link href="build/font-pack.6f3ecd0bf31c428a95f7.css" rel="stylesheet"/><link href="build/2.011fed84e8b0e1b602b9.css" rel="stylesheet"/><link href="build/24.67a0a5daa4bc987211b4.css" rel="stylesheet"/><link href="build/slide-styles.0d5057d79e54b6b5a6ab.css" rel="stylesheet"/><link href="build/1.c696cbbf0654f912e3b9.css" rel="stylesheet"/><link href="build/slide.c6f6bc9d3b00af8194ce.css" rel="stylesheet"/>
+<!-- For reveal.js theme -->
+<link href="./build/reveal.js/css/theme/white.css" id="theme" rel="stylesheet"/>
+<!-- For syntax highlighting -->
+<link href="./build/reveal.js/lib/css/zenburn.css" rel="stylesheet"/>
+<!-- For overwrite reveal.js -->
+<link href="./css/slide.css" rel="stylesheet"/>
+<!-- Printing and PDF exports -->
+<script nonce="609f6bad-e9db-4c24-9e17-6c8cf618dfb0">
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = 'build/reveal.js/' + (window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css');
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
+</head>
+<body translate="no">
+<div class="container">
+<div class="reveal">
+<div class="slides">
+
+&lt;!-- .slide: data-background="./uploads/2e2f7ded-205d-4729-b109-482720a53686.png" --&gt;
+
+# Constructing a Knowledge Graph for the History of (Socio-)Legal Scholarship
+
+Christian Boulanger
+
+mpilhlt Summer Academy, 12 Jul 2023
+
+
+&lt;img src=./uploads/5e7f9c38-731e-4eb4-b0a0-3a81f6feec6c.png style="box-shadow:none; width:40vw; transform: translateY(-40px);"/&gt;
+
+
+---
+
+
+&lt;!-- .slide: data-background="./uploads/2d1712fe-8c5e-4266-88d0-59cd183f4ca3.png" --&gt;
+
+
+## Who am I?
+
+- Political scientist/sociologist of law
+&lt;!-- .element: class="fragment" data-fragment-index="1" --&gt;
+- Dept. of Prof. Auer, Multidisciplinary Legal Theory
+&lt;!-- .element: class="fragment" data-fragment-index="2" --&gt;
+- Long-term research project: History of socio-legal studies in Germany/comparatively
+&lt;!-- .element: class="fragment" data-fragment-index="3" --&gt;
+- Programming experience but new to data science
+&lt;!-- .element: class="fragment" data-fragment-index="4" --&gt;
+- Knowledge in Python, R, Neo4J/Cypher, JavaScript/HTML/CSS (Visualization)
+&lt;!-- .element: class="fragment" data-fragment-index="5" --&gt;
+
+```graphviz
+digraph G {
+    // nodes for the persons and entities
+    CB [label="Christian Boulanger", shape=ellipse, color=blue];
+    mpilhlt [label="Max Planck Institute for Legal History and Legal Theory", shape=rectangle, color=orange];
+    DeptAuer [label="Dept. of Prof. Auer, Multidisciplinary Legal Theory", shape=rectangle, color=orange];
+    Project [label="History of socio-legal studies", shape=box, color=green];
+    Python [label="Python", shape=ellipse, color=gray];
+    R [label="R", shape=ellipse, color=gray];
+    Neo4j [label="Neo4J/Cypher", shape=ellipse, color=gray];
+    JavaScript [label="JavaScript/HTML/CSS", shape=ellipse, color=gray];
+
+    // relations
+    CB -&gt; mpilhlt [label="works at"];
+    mpilhlt -&gt; DeptAuer [label="has department"];
+    CB -&gt; DeptAuer [label="works at"];
+    CB -&gt; Project [label="has research project"];
+    CB -&gt; Python [label="knows"];
+    CB -&gt; R [label="knows"];
+    CB -&gt; Neo4j [label="knows"];
+    CB -&gt; JavaScript [label="knows"];
+}
+
+```
+
+---
+
+&lt;!-- .slide: data-background="./uploads/2d1712fe-8c5e-4266-88d0-59cd183f4ca3.png" --&gt;
+
+## Purpose of the talk
+
+&lt;img style="width:25vw; float:right; margin-left: 20px;" src="./uploads/e8ac53da-600d-462e-a1e4-7b8583c41f35.png" /&gt;
+
+
+- provide the concept of a knowledge graph and what it can do for you 
+&lt;!-- .element: class="fragment" data-fragment-index="2" --&gt;
+- show difficulties in data acquisition
+&lt;!-- .element: class="fragment" data-fragment-index="3" --&gt;
+- show off some cool visualizations of the graph data
+&lt;!-- .element: class="fragment" data-fragment-index="4" --&gt;
+
+
+---
+
+
+## Example of a knowledge graph
+
+![](./uploads/97d492b6-ffc6-4782-86cc-d1ab11b7de0b.png)
+&lt;div style="text-align:right; font-size:10pt"&gt;&lt;a href=https://yashuseth.blog/2019/10/08/introduction-question-answering-knowledge-graphs-kgqa&gt;Source: yashuseth.blog/2019/10/08/introduction-question-answering-knowledge-graphs-kgqa&lt;/a&gt;&lt;/div&gt;
+
+
+---
+
+&lt;!-- .slide: data-background="./uploads/2d1712fe-8c5e-4266-88d0-59cd183f4ca3.png" --&gt;
+
+## What is a knowledge graph (good for)?
+
+Let's ask ChatGPT:
+&lt;!-- .element: class="fragment" data-fragment-index="1" --&gt;
+&gt; A knowledge graph is a **structured representation of information** that captures **relationships between entities**. It is designed to organize and connect various types of knowledge, such as facts, concepts, and entities, in a **graph-like structure**. Knowledge graphs are used to model knowledge in a way that is **machine-readable** and can be easily processed and analyzed.
+&lt;!-- .element: class="fragment" data-fragment-index="2" --&gt;
+
+---
+
+
+
+## In particular: KG of an academic discipline
+
+captures the graph-like structure of
+
+&lt;img style="width:30vw; float:right; margin-left: 20px;" src="./uploads/f898f341-d3da-4a96-8502-83bf27b48ddc.png" /&gt;
+
+- academic knowledge production: works citing other works
+&lt;!-- .element: class="fragment" data-fragment-index="1" --&gt;
+- the social network of scholars, institutions, conferences ...
+&lt;!-- .element: class="fragment" data-fragment-index="2" --&gt;
+
+---
+
+&lt;!-- .slide: data-background="./uploads/2d1712fe-8c5e-4266-88d0-59cd183f4ca3.png" --&gt;
+
+## Data model complexity vs. data acquisition cost
+
+&lt;img style="width:25vw; float:right; margin-left: 20px;" src="./uploads/46192067-d9bf-4325-aca5-8a4f47482869.jpg" /&gt;
+
+
+Tradeoff between "richness" and data availability &amp; usability of the KG:
+
+- must provide enough **discrete entities** (example: author node vs author metadata on publications)  
+&lt;!-- .element: class="fragment" data-fragment-index="1" --&gt;
+- data must be **available/generatable** (example: publications vs. academic conferences)
+&lt;!-- .element: class="fragment" data-fragment-index="2" --&gt;
+- costs for **post-processing** in terms of time &amp; people resources (example: OCR cleaning and correction)
+&lt;!-- .element: class="fragment" data-fragment-index="3" --&gt;
+
+
+---
+
+
+## Data model: Design
+
+![](./uploads/942e44f6-abb2-419a-a288-9c00fe24db9e.png)
+
+Advantages: suffiently generic, OpenAlex.org as Open Access data provider with matching data model 
+
+---
+
+&lt;!-- .slide: data-background="./uploads/2d1712fe-8c5e-4266-88d0-59cd183f4ca3.png" --&gt;
+
+## Gaps in the data for intellectual history
+
+![](./uploads/54b82133-d42b-4944-bca6-a1acf478a918.png)
+
+---
+
+&lt;!-- .slide: data-background="./uploads/2d1712fe-8c5e-4266-88d0-59cd183f4ca3.png" --&gt;
+
+## Example workflow for generating a citation graph
+
+[![](./uploads/107d92e4-9851-487d-88bc-11dbb89c1a54.png =300x)](https://cboulanger.github.io/anystyle-workflow/workflow.drawio.sozi.html)
+
+----
+
+&lt;!-- .slide: data-background="./uploads/2d1712fe-8c5e-4266-88d0-59cd183f4ca3.png" --&gt;
+
+## Training citation extraction models
+
+![](./uploads/7f3937c3-fcec-4db9-b998-21434384628d.png)
+
+https://github.com/cboulanger/citext 
+
+----
+
+&lt;!-- .slide: data-background="./uploads/2d1712fe-8c5e-4266-88d0-59cd183f4ca3.png" --&gt;
+
+## Problems
+
+- Overall good performance (systematic evaluation required), but many wrong classifications ("See ..." classified as author name)
+- Can identify large-scale (noise-tolerant) trends, but is not reliable for making qualitative statements concerning individual cases ("X was/was not cited").
+- OCR noise big problem due to lack of error correction  
+
+----
+
+&lt;!-- .slide: data-background="./uploads/2d1712fe-8c5e-4266-88d0-59cd183f4ca3.png" --&gt;
+
+## ChatGPT needs no training
+
+[![](./uploads/d13612c2-8ea6-47f4-be60-bf4ff176bf25.png)](./CDSuiiyLTpmi5LUfxxX2Qg#)
+
+[Chat](https://chat.openai.com/share/8600610d-0e93-43ad-8d27-75a154bde0c1)
+
+---
+
+&lt;!-- .slide: data-background="./uploads/2d1712fe-8c5e-4266-88d0-59cd183f4ca3.png" --&gt;
+
+## Analyses
+
+Once we have the data, what can we do with it?
+
+- Export to a graph database
+&lt;!-- .element: class="fragment" data-fragment-index="1" --&gt;
+- Analysis of graph data in RStudio or in a [Jupyter Notebook](https://github.com/cboulanger/jls-bibliometry/blob/master/jls-bibliometry.ipynb) 
+&lt;!-- .element: class="fragment" data-fragment-index="2" --&gt;
+
+
+![](./uploads/68c9e0e5-0ca7-481a-8dca-b30d29249a9a.png)
+&lt;!-- .element: class="fragment" data-fragment-index="1" --&gt;
+![](./uploads/5d7c34a5-0e4a-4526-8b09-adddbf532ba6.png)
+&lt;!-- .element: class="fragment" data-fragment-index="2" --&gt;
+
+---
+
+&lt;!-- .slide: data-background="./uploads/2d1712fe-8c5e-4266-88d0-59cd183f4ca3.png" --&gt;
+
+### Example 1: Journal mapping
+
+[![](./uploads/46119be5-c9ef-4153-9ccd-7e733afcbc06.png =300x)](https://rpubs.com/cboulanger/jls-journal-network2)
+
+---
+
+&lt;!-- .slide: data-background="./uploads/2d1712fe-8c5e-4266-88d0-59cd183f4ca3.png" --&gt;
+
+### Example 2: &lt;br&gt;Most cited authors in the JLS
+
+
+[![](./uploads/bb19088b-ed30-407a-a4e4-f9664ec82449.png =300x)](https://cboulanger.github.io/jls-bibliometry/jls-most-cited-with-most-citing-1984-1993.html)
+
+---
+
+&lt;!-- .slide: data-background="./uploads/2d1712fe-8c5e-4266-88d0-59cd183f4ca3.png" --&gt;
+
+### Example 3: &lt;br&gt;Sociology of law textbooks citing Eugen Ehrlich
+
+[![](./uploads/4899e28a-7a60-4466-9b3c-1ec7e9a8a24d.png =300x)](https://cboulanger.github.io/ehrlich-bibliometrie/ehrlich-rsoz-lehrbuecher-network2.html)
+
+---
+
+&lt;!-- .slide: data-background="./uploads/2d1712fe-8c5e-4266-88d0-59cd183f4ca3.png" --&gt;
+
+## Thank you for your attention! 
+
+
+![](./uploads/f813a4aa-e2d1-4767-8752-d6d113c5a67c.png =400x )
+
+https://www.lhlt.mpg.de/boulanger
+boulanger@lhlt.mpg.de
+
+
+----
+
+&lt;!-- .slide: data-background="./uploads/2d1712fe-8c5e-4266-88d0-59cd183f4ca3.png" --&gt;
+
+## Tools used for preparing this presentation
+
+- [HedgeDoc](https://hedgedoc.org/): Open Source collaborative markdown editor (via https://pad.gwdg.de), using 
+    - slide mode powered by [reveal.js](https://revealjs.com/)
+    - diagrams powered by [graphviz](https://github.com/ballantony/dot-graphviz/blob/main/graphs.org)
+- [Sozi](https://sozi.baierouge.fr/pages/10-about.html): zooming presentation editor and player (Open Source Prezi.com equivalent), based on SVG prepared by https://www.drawio.com and https://inkscape.org
+- Source code is [here](./Nr7J3IWJSWeGfruUmtljiQ?edit).
+
+
+
+&lt;style type="text/css"&gt;
+    h1.raw{font-size: 5vw;}
+    h2.raw{font-size: 4vw;}
+    h3.raw{font-size: 3vw;}
+    .reveal section {font-size: 30px;}
+    img.resize {max-height: calc(100vh - 200px); width: auto;}
+    .reveal blockquote {
+        display: block;
+        position: relative;
+        text-align: left;
+        width: 70%;
+        margin: 20px auto;
+        padding: 10px;
+        font-style: italic;
+        background: rgba(0, 0, 0, 0.05);
+        box-shadow: 0px 0px 2px rgb(0, 0, 0);
+    }
+    .reveal section img {
+        margin: 15px 0px;
+        background: rgba(255, 255, 255, 0.12);
+        border: 0px solid #222;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    }
+    
+    section ul {display: block !important}
+    .reveal a:not(:hover) img {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: #2a76dd;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.55); 
+      animation: pulsate 1s ease-out infinite;
+    }
+    @-webkit-keyframes pulsate {
+        0%   { box-shadow: 0 0 5px rgba(0, 0, 0, 0.55); }
+        50%  { box-shadow: 0 0 17px rgba(0, 0, 0, 0.55); }
+        100% { box-shadow: 0 0 5px rgba(0, 0, 0, 0.55); }
+    }
+&lt;/style&gt;
+</div>
+</div>
+<div id="meta">{"title":"Constructing a Knowledge Graph for the History of (Socio-)Legal Scholarship (mpilhlt summer school)","subtitle":null,"author":"Christian Boulanger","type":"slide","tags":"presentation","slideOptions":{"transition":"slide","theme":"white"}}</div>
+<div class="footer">
+<div class="unselectable hidden-print gray-font">
+<small>
+<span>
+<span class="ui-lastchangeuser"> <i class="ui-user-icon small" data-placement="right" data-toggle="tooltip" style="background-image: url(./user/boulanger%40lhlt.mpg.de/avatar.svg);" title="boulanger@lhlt.mpg.de"></i></span>
+                            
+                             <span class="text-uppercase ui-status-lastchange"></span>
+<span class="ui-lastchange text-uppercase" data-createtime="Tue Jul 11 2023 16:23:49 GMT+0000 (Coordinated Universal Time)" data-updatetime="Mon May 27 2024 19:00:48 GMT+0000 (Coordinated Universal Time)"></span>
+</span>
+<span class="pull-right">493 views <a class="ui-edit" href="#" title="Edit this note"><i class="fa fa-fw fa-pencil"></i></a><a class="ui-print" href="" title="Open print view"><i class="fa fa-fw fa-print"></i></a></span>
+<br/>
+</small>
+</div>
+</div>
+</div>
+<script src="./js/mathjax-config-extra.js"></script>
+<script defer="" src="./build/MathJax/MathJax.js"></script>
+<script defer="" src="./build/MathJax/config/TeX-AMS-MML_HTMLorMML.js"></script>
+<script defer="" src="./build/MathJax/config/Safe.js"></script>
+<script src="config"></script><script defer="defer" src="build/vendors~cover~cover-pack~index~index-pack~pretty~pretty-pack~slide~slide-pack.d107ac6ccdc2f7684946.js"></script><script defer="defer" src="build/vendors~index~index-pack~pretty~pretty-pack~slide~slide-pack.a2fac85c338ccd8282ca.js"></script><script defer="defer" src="build/slide-pack.9fe42901cee029fba75d.js"></script>
+</body>
+</html>
