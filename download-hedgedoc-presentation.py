@@ -15,7 +15,7 @@ def download_resource(session, url, base_dir, level=0):
         content_is_code = content_type.split("; ")[0] in ['application/javascript', 'text/javascript', 'text/css']
         
         if 'text/html' in content_type and not url.endswith(".html"):
-            print(f"Skipped downloading {url}: MIME type is text/html (likely a 404 page)")
+            print(f"!! Skipped downloading {url}: MIME type is text/html (likely a 404 page)")
             return
 
         parsed_url = urlparse(url)
@@ -80,7 +80,7 @@ def replace_and_download_resources(session, soup, base_url, base_dir):
             script.string.replace_with(updated_script)
 
 def download_uploads_resources(session, html_str, base_dir):
-    matches = re.findall(r'https://pad\.gwdg\.de/uploads/[^\s\'\"\)\]]+', html_str)
+    matches = re.findall(r'https://pad\.gwdg\.de/uploads/[^\s\'\"\)\]\&>\/]+', html_str)
     for match in matches:
         resource_url = match
         download_resource(session, resource_url, base_dir)
