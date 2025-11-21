@@ -5,37 +5,43 @@ from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse
 import argparse
 
-def download_resource(session, url, base_dir, level=0):
+def download_resource(session, url, base_dir, level=0, skip_existing=False):
     try:
+        parsed_url = urlparse(url)
+        resource_path = os.path.join(base_dir, parsed_url.path.lstrip('/'))
+
+        # Skip if file already exists and skip_existing is True
+        if skip_existing and os.path.exists(resource_path):
+            print(f'{"    "*level}Skipping {parsed_url.path} (already exists)')
+            return resource_path
+
         response = session.get(url, stream=True)
         response.raise_for_status()
 
         # Check the content type to ensure it's not an HTML error page
         content_type = response.headers.get('Content-Type', '')
         content_is_code = content_type.split("; ")[0] in ['application/javascript', 'text/javascript', 'text/css']
-        
+
         if 'text/html' in content_type and not url.endswith(".html"):
             print(f"!! Skipped downloading {url}: MIME type is text/html (likely a 404 page)")
-            return
+            return None
 
-        parsed_url = urlparse(url)
-        resource_path = os.path.join(base_dir, parsed_url.path.lstrip('/'))
         resource_dir = os.path.dirname(resource_path)
-        
+
         os.makedirs(resource_dir, exist_ok=True)
-        
+
         print(f'{"    "*level}Saving {parsed_url.path} to {resource_path}')
-        
+
         with open(resource_path, 'wb') as f:
             content = b""
             for chunk in response.iter_content(chunk_size=8192):
-                
+
                 # Monkey-patch the javascript
                 if resource_path.endswith('slide-pack.9fe42901cee029fba75d.js'):
                     chunk_str = chunk.decode('utf-8')
                     chunk_str = chunk_str.replace('src:serverurl+"/build/', 'src:"build/')
                     chunk = chunk_str.encode('utf-8')
-                    
+
                 content += chunk
                 f.write(chunk)
 
@@ -46,27 +52,30 @@ def download_resource(session, url, base_dir, level=0):
             matches += ['https://pad.gwdg.de/' + p for p in re.findall(r'/(build|css|js)/[^\'"\s\)\]]+', content_str)]
             for match in matches:
                 if not match.endswith("/"):
-                    download_resource(session, match, base_dir, level+1)
-                
+                    download_resource(session, match, base_dir, level+1, skip_existing)
+
+        return resource_path
+
     except Exception as e:
-        print(f"{"    "*level}Failed to download {url}: {e}")
+        print(f'{"    "*level}Failed to download {url}: {e}')
+        return None
 
 def remove_csp(soup):
     for meta in soup.find_all("meta"):
         if 'http-equiv' in meta.attrs and meta.attrs['http-equiv'] == 'Content-Security-Policy':
             meta.decompose()
 
-def replace_and_download_resources(session, soup, base_url, base_dir):
+def replace_and_download_resources(session, soup, base_url, base_dir, skip_existing=False):
     for tag in soup.find_all(['img', 'link', 'script']):
         if tag.name == 'img' and tag.get('src'):
             resource_url = urljoin(base_url, tag['src'])
-            download_resource(session, resource_url, base_dir)
+            download_resource(session, resource_url, base_dir, skip_existing=skip_existing)
         elif tag.name == 'link' and tag.get('href'):
             resource_url = urljoin(base_url, tag['href'])
-            download_resource(session, resource_url, base_dir)
+            download_resource(session, resource_url, base_dir, skip_existing=skip_existing)
         elif tag.name == 'script' and tag.get('src'):
             resource_url = urljoin(base_url, tag['src'])
-            download_resource(session, resource_url, base_dir)
+            download_resource(session, resource_url, base_dir, skip_existing=skip_existing)
 
     # Handle dynamically generated URLs in script content
     for script in soup.find_all('script'):
@@ -75,15 +84,15 @@ def replace_and_download_resources(session, soup, base_url, base_dir):
             matches = re.findall(r'https://pad\.gwdg\.de/([^\'"\s]+)', updated_script)
             for match in matches:
                 resource_url = urljoin(base_url, match)
-                download_resource(session, resource_url, base_dir)
+                download_resource(session, resource_url, base_dir, skip_existing=skip_existing)
                 updated_script = updated_script.replace(resource_url, match)
             script.string.replace_with(updated_script)
 
-def download_uploads_resources(session, html_str, base_dir):
+def download_uploads_resources(session, html_str, base_dir, skip_existing=False):
     matches = re.findall(r'https://pad\.gwdg\.de/uploads/[^\s\'\"\)\]\&>\/]+', html_str)
     for match in matches:
         resource_url = match
-        download_resource(session, resource_url, base_dir)
+        download_resource(session, resource_url, base_dir, skip_existing=skip_existing)
 
 def download_additional_resources(session, base_url, base_dir, additional_paths):
     for path in additional_paths:
@@ -120,6 +129,44 @@ def download_html_and_resources(slide_id, output_html, base_dir, additional_path
     # Save the modified HTML
     with open(os.path.join(base_dir, output_html), 'w', encoding='utf-8') as f:
         f.write(html_str)
+
+def download_single_page(slide_id, output_html, base_dir, skip_existing=False):
+    """Download the single-page version of the presentation.
+
+    Args:
+        slide_id: The slide ID from pad.gwdg.de
+        output_html: Output filename for the HTML
+        base_dir: Base directory for saving files
+        skip_existing: If True, skip downloading resources that already exist
+    """
+    base_url = "https://pad.gwdg.de"
+    page_url = f"{base_url}/s/{slide_id}"
+
+    session = requests.Session()
+    response = session.get(page_url)
+    response.raise_for_status()
+
+    soup = BeautifulSoup(response.text, 'html.parser')
+    remove_csp(soup)  # Remove CSP settings
+
+    # Only download resources that are actually referenced in the page
+    replace_and_download_resources(session, soup, base_url, base_dir, skip_existing=skip_existing)
+
+    # Convert the soup object to string to find and download uploads resources
+    html_str = str(soup)
+    download_uploads_resources(session, html_str, base_dir, skip_existing=skip_existing)
+
+    # Convert all occurrences of the base URL to local paths
+    html_str = html_str.replace(base_url + '/', './')
+
+    # Ensure the base directory exists
+    os.makedirs(base_dir, exist_ok=True)
+
+    # Save the modified HTML
+    with open(os.path.join(base_dir, output_html), 'w', encoding='utf-8') as f:
+        f.write(html_str)
+
+    print(f"Single-page version saved to {os.path.join(base_dir, output_html)}")
 
 def get_presentation_directories(docs_dir):
     """Get all directories in docs/ that contain an index.html file."""
@@ -176,6 +223,11 @@ def update_index_html(docs_dir):
         a:hover {
             text-decoration: underline;
         }
+        .single-page-link {
+            font-size: 14px;
+            color: #666;
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
@@ -183,15 +235,22 @@ def update_index_html(docs_dir):
     <ul>
 """
 
+    docs_path = os.path.join(os.getcwd(), docs_dir)
     for presentation in presentations:
-        html_content += f'        <li><a href="{presentation}/index.html">{presentation}</a></li>\n'
+        # Check if single-page.html exists for this presentation
+        single_page_path = os.path.join(docs_path, presentation, 'single-page.html')
+        has_single_page = os.path.exists(single_page_path)
+
+        html_content += f'        <li><a href="{presentation}/index.html">{presentation}</a>'
+        if has_single_page:
+            html_content += f' <a href="{presentation}/single-page.html" class="single-page-link">(single page)</a>'
+        html_content += '</li>\n'
 
     html_content += """    </ul>
 </body>
 </html>
 """
 
-    docs_path = os.path.join(os.getcwd(), docs_dir)
     os.makedirs(docs_path, exist_ok=True)
 
     index_path = os.path.join(docs_path, 'index.html')
@@ -206,6 +265,8 @@ if __name__ == "__main__":
     parser.add_argument('-d', '--dir', help="The directory name (will be created as subdirectory of docs/)")
     parser.add_argument('-u', '--update-index-only', action='store_true',
                         help="Only update the docs/index.html without downloading a presentation")
+    parser.add_argument('-s', '--single-page-only', action='store_true',
+                        help="Only download the single-page version (s/<id>) without the full presentation")
 
     args = parser.parse_args()
 
@@ -223,6 +284,24 @@ if __name__ == "__main__":
     slide_id = args.id
     dir_name = args.dir
     base_dir = os.path.join(docs_base, dir_name)
+
+    # If single-page-only mode, just download the single-page version
+    if args.single_page_only:
+        # Check if slide presentation index.html exists
+        slide_index_path = os.path.join(base_dir, "index.html")
+        if os.path.exists(slide_index_path):
+            output_filename = "single-page.html"
+            print(f"Downloading single-page version to {base_dir}/{output_filename}")
+        else:
+            output_filename = "index.html"
+            print(f"No slide presentation found. Downloading single-page version as {base_dir}/{output_filename}")
+
+        download_single_page(slide_id, output_filename, base_dir, skip_existing=True)
+        print("\nUpdating docs/index.html...")
+        update_index_html(docs_base)
+        exit(0)
+
+    # Otherwise, download the full presentation and the single-page version
     output_html = "index.html"
 
     # this is a manual collection of resources that were not discovered by the script, probably incomplete
@@ -269,5 +348,10 @@ if __name__ == "__main__":
     download_html_and_resources(slide_id, output_html, base_dir, additional_paths)
 
     print(f"\nPresentation downloaded successfully to {base_dir}")
-    print("Updating docs/index.html...")
+
+    # Also download the single-page version
+    print("Downloading single-page version...")
+    download_single_page(slide_id, "single-page.html", base_dir)
+
+    print("\nUpdating docs/index.html...")
     update_index_html(docs_base)
