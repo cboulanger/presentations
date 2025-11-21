@@ -93,7 +93,7 @@ def download_additional_resources(session, base_url, base_dir, additional_paths)
 def download_html_and_resources(slide_id, output_html, base_dir, additional_paths):
     base_url = "https://pad.gwdg.de"
     page_url = f"{base_url}/p/{slide_id}"
-    
+
     session = requests.Session()
     response = session.get(page_url)
     response.raise_for_status()
@@ -103,17 +103,17 @@ def download_html_and_resources(slide_id, output_html, base_dir, additional_path
 
     # Replace occurrences of the base URL with the local paths and download resources
     replace_and_download_resources(session, soup, base_url, base_dir)
-    
+
     # Convert the soup object to string to find and download uploads resources
     html_str = str(soup)
     download_uploads_resources(session, html_str, base_dir)
-    
+
     # Download additional specified resources
     download_additional_resources(session, base_url, base_dir, additional_paths)
-    
+
     # Convert all occurrences of the base URL to local paths
     html_str = html_str.replace(base_url + '/', './')
-    
+
     # Ensure the base directory exists
     os.makedirs(base_dir, exist_ok=True)
 
@@ -121,16 +121,110 @@ def download_html_and_resources(slide_id, output_html, base_dir, additional_path
     with open(os.path.join(base_dir, output_html), 'w', encoding='utf-8') as f:
         f.write(html_str)
 
+def get_presentation_directories(docs_dir):
+    """Get all directories in docs/ that contain an index.html file."""
+    presentations = []
+    docs_path = os.path.join(os.getcwd(), docs_dir)
+
+    if not os.path.exists(docs_path):
+        return presentations
+
+    for entry in os.listdir(docs_path):
+        entry_path = os.path.join(docs_path, entry)
+        if os.path.isdir(entry_path):
+            index_path = os.path.join(entry_path, 'index.html')
+            if os.path.exists(index_path):
+                presentations.append(entry)
+
+    return sorted(presentations)
+
+def update_index_html(docs_dir):
+    """Create or update docs/index.html with a list of all presentations."""
+    presentations = get_presentation_directories(docs_dir)
+
+    html_content = """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentations</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin: 15px 0;
+        }
+        a {
+            color: #0066cc;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Presentations</h1>
+    <ul>
+"""
+
+    for presentation in presentations:
+        html_content += f'        <li><a href="{presentation}/index.html">{presentation}</a></li>\n'
+
+    html_content += """    </ul>
+</body>
+</html>
+"""
+
+    docs_path = os.path.join(os.getcwd(), docs_dir)
+    os.makedirs(docs_path, exist_ok=True)
+
+    index_path = os.path.join(docs_path, 'index.html')
+    with open(index_path, 'w', encoding='utf-8') as f:
+        f.write(html_content)
+
+    print(f"Updated {index_path} with {len(presentations)} presentation(s)")
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Download and save HTML and resources from pad.gwdg.de")
-    parser.add_argument('-i', '--id', required=True, help="The slide ID from pad.gwdg.de")
-    parser.add_argument('-d', '--dir', required=True, help="The directory where the resources will be saved")
+    parser.add_argument('-i', '--id', help="The slide ID from pad.gwdg.de")
+    parser.add_argument('-d', '--dir', help="The directory name (will be created as subdirectory of docs/)")
+    parser.add_argument('-u', '--update-index-only', action='store_true',
+                        help="Only update the docs/index.html without downloading a presentation")
 
     args = parser.parse_args()
 
+    docs_base = "docs"
+
+    # If update-index-only mode, just update the index and exit
+    if args.update_index_only:
+        update_index_html(docs_base)
+        exit(0)
+
+    # Otherwise, require both -i and -d parameters
+    if not args.id or not args.dir:
+        parser.error("Both -i/--id and -d/--dir are required unless using -u/--update-index-only")
+
     slide_id = args.id
-    base_dir = args.dir
+    dir_name = args.dir
+    base_dir = os.path.join(docs_base, dir_name)
     output_html = "index.html"
+
     # this is a manual collection of resources that were not discovered by the script, probably incomplete
     additional_paths = [
         "build/85934a8a31bd9b8b75e68eeb57b6859810055d48742953766c4a5c2b5a0d5266.woff",
@@ -142,7 +236,7 @@ if __name__ == "__main__":
         "build/MathJax/jax/input/MathML/config.js?V=2.7.9",
         "build/MathJax/jax/output/HTML-CSS/config.js?V=2.7.9",
         "build/MathJax/jax/output/NativeMML/config.js?V=2.7.9",
-        "build/MathJax/jax/output/PreviewHTML/config.js?V=2.7.9", 
+        "build/MathJax/jax/output/PreviewHTML/config.js?V=2.7.9",
         "build/MathJax/extensions/tex2jax.js?V=2.7.9",
         "build/MathJax/extensions/mml2jax.js?V=2.7.9",
         "build/MathJax/extensions/MathEvents.js?V=2.7.9",
@@ -170,4 +264,10 @@ if __name__ == "__main__":
         "build/reveal.js/lib/font/source-sans-pro/source-sans-pro-regular.ttf",
         "build/reveal.js/lib/font/source-sans-pro/source-sans-pro-regular.woff"
     ]
+
+    print(f"Downloading presentation to {base_dir}")
     download_html_and_resources(slide_id, output_html, base_dir, additional_paths)
+
+    print(f"\nPresentation downloaded successfully to {base_dir}")
+    print("Updating docs/index.html...")
+    update_index_html(docs_base)
