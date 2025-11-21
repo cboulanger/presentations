@@ -29,4 +29,4 @@ options:
 
 ## View Presentations
 
-See [docs/index.html](docs/index.html) for the list of all presentations.
+See the [github page](https://cboulanger.github.io/presentations/) for the list of all presentations.
