@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0, user-scalable=no" name="viewport"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="   # Wie baut man einen Zitationsgraphen für die Rechtsforschung?  Christian Boulanger  Universität " name="description"/>
+<meta content="Wie baut man einen Zitationsgraphen für die Rechtsforschung? (2025) - HedgeDoc" property="og:title"/>
+<meta content="website" property="og:type"/>
+<meta content="./icons/android-chrome-512x512.png" property="og:image"/>
+<meta content="HedgeDoc logo" property="og:image:alt"/>
+<meta content="image/png" property="og:image:type"/>
+<base href="./"/>
+<title>Wie baut man einen Zitationsgraphen für die Rechtsforschung? (2025) - HedgeDoc</title>
+<link href="./icons/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="./icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="./icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="./icons/site.webmanifest" rel="manifest"/>
+<link color="#b51f08" href="./icons/safari-pinned-tab.svg" rel="mask-icon"/>
+<link href="./icons/favicon.ico" rel="shortcut icon"/>
+<meta content="HedgeDoc - Ideas grow better together" name="apple-mobile-web-app-title"/>
+<meta content="HedgeDoc - Ideas grow better together" name="application-name"/>
+<meta content="#b51f08" name="msapplication-TileColor"/>
+<meta content="./icons/browserconfig.xml" name="msapplication-config"/>
+<meta content="#b51f08" name="theme-color"/>
+<link href="./build/emojify.js/dist/css/basic/emojify.min.css" rel="stylesheet"/>
+<link href="build/font-pack.4362583c9249021b5028.css" rel="stylesheet"/><link href="build/2.15c517ea2148f55c8206.css" rel="stylesheet"/><link href="build/3.ec6e7d6280fcd73e729d.css" rel="stylesheet"/><link href="build/pretty-styles-pack.2fb0d01138de2df6de0a.css" rel="stylesheet"/><link href="build/pretty-styles.8aa1888af7df52aee395.css" rel="stylesheet"/><link href="build/1.1666d9d869a0532d9bce.css" rel="stylesheet"/><link href="build/pretty.6b8d0fd475bd77f9c4c4.css" rel="stylesheet"/>
+</head>
+<body style="display:none;">
+<div class="ui-infobar container-fluid unselectable hidden-print">
+<small>
+<span>
+<span class="ui-lastchangeuser"> <i class="ui-user-icon small" data-placement="right" data-toggle="tooltip" style="background-image: url(./user/boulanger%40lhlt.mpg.de/avatar.svg);" title="boulanger@lhlt.mpg.de"></i></span>
+                
+                 <span class="text-uppercase ui-status-lastchange"></span>
+<span class="ui-lastchange text-uppercase" data-createtime="Sat Dec 06 2025 09:18:23 GMT+0000 (Coordinated Universal Time)" data-updatetime="Wed Dec 10 2025 15:28:32 GMT+0000 (Coordinated Universal Time)"></span>
+</span>
+<span class="pull-right">95 views <a class="ui-edit" href="#" title="Edit this note"><i class="fa fa-fw fa-pencil"></i></a></span>
+<br/>
+</small>
+</div>
+<div class="container markdown-body" id="doc" lang="de-DE">
+
+
+# Wie baut man einen Zitationsgraphen für die Rechtsforschung?
+
+Christian Boulanger
+
+Universität Stuttgart, 10.12.2025
+
+
+&lt;img src=./uploads/5e7f9c38-731e-4eb4-b0a0-3a81f6feec6c.png style="box-shadow:none; width:40vw; transform: translateY(-40px);"/&gt;
+
+&lt;!-- TOC ignored by slides, but shown in HTML view --&gt;
+[TOC]
+
+---
+
+## Über mich
+
+- Politikwissenschaftler/Rechtssoziologe
+&lt;!-- .element: class="fragment" --&gt;
+- Abteilung von Prof. Auer, Multidisziplinäre Rechtstheorie
+&lt;!-- .element: class="fragment" --&gt;
+- Langfristiges Forschungsprojekt: Geschichte der Rechtssoziologie in Deutschland in vergleichender Perspektive
+&lt;!-- .element: class="fragment" --&gt;
+- Programmiererfahrung, aber relativ neu in Data Science
+&lt;!-- .element: class="fragment" --&gt;
+- Kenntnisse in Python, R, Neo4J/Cypher, JavaScript/HTML/CSS (Visualisierung), LLM (Prompting)
+&lt;!-- .element: class="fragment" --&gt;
+
+```graphviz
+digraph G {
+    // nodes for the persons and entities
+    CB [label="Christian Boulanger", shape=ellipse, color=blue];
+    mpilhlt [label="Max Planck Institute for Legal History and Legal Theory", shape=rectangle, color=orange];
+    DeptAuer [label="Dept. of Prof. Auer, Multidisciplinary Legal Theory", shape=rectangle, color=orange];
+    Project [label="History of socio-legal studies", shape=box, color=green];
+    Python [label="Python", shape=ellipse, color=gray];
+    R [label="R", shape=ellipse, color=gray];
+    Neo4j [label="Neo4J/Cypher", shape=ellipse, color=gray];
+    JavaScript [label="JavaScript/HTML/CSS", shape=ellipse, color=gray];
+
+    // relations
+    CB -&gt; mpilhlt [label="works at"];
+    mpilhlt -&gt; DeptAuer [label="has department"];
+    CB -&gt; DeptAuer [label="works at"];
+    CB -&gt; Project [label="has research project"];
+    CB -&gt; Python [label="knows"];
+    CB -&gt; R [label="knows"];
+    CB -&gt; Neo4j [label="knows"];
+    CB -&gt; JavaScript [label="knows"];
+}
+
+```
+
+---
+
+## Zweck des Vortrags
+
+&lt;img style="width:25vw; float:right; margin-left: 20px;" src="./uploads/e8ac53da-600d-462e-a1e4-7b8583c41f35.png" /&gt;
+
+- das Konzept eines Zitationsgraphen und dessen Nutzen vermitteln
+&lt;!-- .element: class="fragment" --&gt;
+- Schwierigkeiten bei der Datenbeschaffung aufzeigen
+&lt;!-- .element: class="fragment" --&gt;
+- Zeigen, was man mit Graphdaten machen kann
+&lt;!-- .element: class="fragment" --&gt;
+
+
+
+---
+
+### Aufbau
+
+1. Zitationsgraphen und Bibliometrie
+&lt;!-- .element: class="fragment" --&gt;
+2. Nutzen und Probleme der Bibliometrie
+&lt;!-- .element: class="fragment" --&gt;
+3. Sonderfall Rechtswissenschaft
+&lt;!-- .element: class="fragment" --&gt;
+4. Zitationsgraphen als Unterfall von Wissensgraphen
+&lt;!-- .element: class="fragment" --&gt;
+5. Probleme der Zitationsextraktion
+&lt;!-- .element: class="fragment" --&gt;
+6. Analysen / Visualisierungen 
+&lt;!-- .element: class="fragment" --&gt;
+
+---
+
+## 1. Zitationsgraphen und Bibliometrie
+
+![](./uploads/3a8c2275-ee12-4490-a922-ffe2631d8738.png)
+&lt;!-- .element: class=resize --&gt;
+
+---
+
+### Was ist ein Zitationsgraph?
+
+```graphviz
+digraph G {
+    p1 [label="Publikation 1", shape=ellipse, color=blue];
+    p2 [label="Publikation 2", shape=ellipse, color=blue];
+    p1 -&gt; p2 [label="zitiert"];
+}
+
+```
+
+- gerichteter Graph (Digraph), bestehend aus Knoten und Kanten
+&lt;!-- .element: class="fragment" --&gt;
+- Knoten (Nodes): Publikationen (z.B. Artikel)
+&lt;!-- .element: class="fragment" --&gt;
+- gerichteten Kanten (Edges): Zitationen 
+&lt;!-- .element: class="fragment" --&gt;
+
+
+---
+
+[![](./uploads/b154f14b-4259-49fa-8200-51bec12a9059.png)](https://kieranhealy.org/blog/archives/2013/06/18/a-co-citation-network-for-philosophy/philcites-static.png)
+Source: Kieran Healy, [A Co-Citation Network for Philosophy](https://kieranhealy.org/blog/archives/2013/06/18/a-co-citation-network-for-philosophy/) (2013)
+&lt;!-- .element: class=caption --&gt;
+
+---
+
+### Zitationsanalyse und Bibliometrie
+
+&gt; "Zitationsanalyse ist ein auf die **Untersuchung von Nachweisapparaten** beschränktes Teilgebiet der **Bibliometrie**, also der **quantitativen Untersuchung von Schriftwerken**. Soweit sich die Zitationsanalyse mit wissenschaftlichen Werken befasst, ist sie zugleich Teil der **Szientometrie**, also der **Ausmessung wissenschaftlicher Diskurse**. Zitationsanalyse will mess- und vergleichbar machen, was durch persönliche Eindrücke nur schwer beurteilt werden kann: **Wissenschaftlicher Einfluss**." (Hamann 2014:505)
+
+
+---
+
+### Methoden der Zitationsanalyse
+
+![](./uploads/2de53429-73bc-4685-9ede-e89b96017f5e.png)
+
+(https://de.wikipedia.org/wiki/Zitationsanalyse#/media/Datei:Kozitation_cdr.png)
+
+---
+
+## 2. Nutzen und Probleme der Bibliometrie
+
+- Evaluative Bibliometrie: Forschungsevaluation -&gt; vergleichbare Metriken zu Bewertungs-/Entscheidungszwecken (Journal Impact Factor, h-Index)
+&lt;!-- .element: class="fragment" --&gt;
+- Historische/analytische Bibliometrie: wissenschaftsgeschichtliche/-soziologische Fragen
+&lt;!-- .element: class="fragment" --&gt;
+
+&lt;img src=./uploads/1974dede-b1df-4bd7-a00d-5fe660bada6d.png style="height: 30vh" /&gt;
+
+
+
+---
+
+### Probleme der evaluativen Bibliometrie
+
+- Datenlage: Fokus auf Artikel, praktisch keine Daten über Bücher
+&lt;!-- .element: class="fragment" --&gt;
+- Abhängigkeit von kommerziellen Anbietern (black box)
+&lt;!-- .element: class="fragment" --&gt;
+- "structurally biased against research produced in non-Western countries, non-English language research, and research from the arts, humanities, and social sciences.” (Tennant 2020, 1)
+&lt;!-- .element: class="fragment" --&gt;
+- Matthäus-Effekt (Merton) - "Wer hat, dem wird gegeben"
+&lt;!-- .element: class="fragment" --&gt;
+
+---
+
+![](./uploads/ecb044af-8937-4f69-8a36-aa7104ce809c.png)
+
+
+---
+
+&gt; "Since the 1980’s, international journal databases include a very small portion of journals from peripheral regions like Latin America. Scholarly communication practices are influenced by the evaluation criteria enforced by funding agencies. “International” (English-language) journals with high impact factors and/or indexed by an international database are often in the top tier. Therefore, everyone tries to publish there." (Vidal 2016)
+
+---
+
+### Exkurs: Kritik am Impact Factor / H-Index
+
+
+&gt; Journal Impact Factor (JIF): Durchschnittliche Anzahl Zitationen pro Artikel einer Zeitschrift in einem bestimmten Zeitfenster (meist 2 Jahre)
+&lt;!-- .element: class="fragment" --&gt;
+
+&gt; H‑(Hirsch)-Index: Für eine Person (oder Institution) mit dem Index h mindestens h Publikationen hat, die jeweils mindestens h mal zitiert wurden. 
+&lt;!-- .element: class="fragment" --&gt;
+
+---
+
+### Hauptkritik am Impact Factor / H-Index
+
+- Methode: Verzerrungen bei der Berechnung (outliers)
+&lt;!-- .element: class="fragment" --&gt;
+- Feld‑ und Zeitabhängigkeit
+&lt;!-- .element: class="fragment" --&gt;
+- Manipulierbarkeit, Missbrauch und "Gaming the system"
+&lt;!-- .element: class="fragment" --&gt;
+- Datenbasis: Intransparenz und *selection bias*
+&lt;!-- .element: class="fragment" --&gt;
+- Fehlende Aussage über Qualität der Publikationen
+&lt;!-- .element: class="fragment" --&gt;
+
+---
+
+### Historische Bibliometrie
+
+&gt; Historical bibliometrics may best be defined as the bibliometric study of periodicals and books published in the framework of time and space. (Hérubel 1999)
+
+- Empirische Daten für die Wissenschaftsgeschichte
+&lt;!-- .element: class="fragment" --&gt;
+- Ausdifferenzierung von Wissenschaftsdisziplinen und -kulturen
+&lt;!-- .element: class="fragment" --&gt;
+- Fokus auf Referenzen zu eng
+&lt;!-- .element: class="fragment" --&gt;
+- Nach wie vor: Fehlende Daten
+&lt;!-- .element: class="fragment" --&gt;
+
+---
+
+## 3. Sonderfall Rechtswissenschaften
+
+![](./uploads/8d9b81b9-f479-4790-af80-b4284196edaf.png)
+
+
+---
+
+### Datenprobleme
+
+![](./uploads/f7c61dff-7092-4bab-bde7-78ff1119f755.png)
+
+- deutsche Rechtswissenschaft von kommerziellen (WoS, Scopus) praktisch nicht, und
+&lt;!-- .element: class="fragment" --&gt;
+- von offenen Datenbanken (Open Alex) nur unzureichend abgedeckt ↓
+&lt;!-- .element: class="fragment" --&gt;
+- Details: Boulanger/ Fejzo/ Rimmert (2025) http://dx.doi.org/10.2139/ssrn.5350481 
+&lt;!-- .element: class="fragment" --&gt;
+
+---
+
+### Zeitliche Abdeckung: OpenAlex vs. ZDB
+
+&lt;a href=./uploads/65d58ce4-247b-4cf5-b445-b4f7dc1db578.png&gt;&lt;img src=./uploads/65d58ce4-247b-4cf5-b445-b4f7dc1db578.png class=resize /&gt;&lt;/a&gt;
+
+Note:
+- Viele weiße Flecken
+- Grafik bildet weder die Lücken noch die tatsächliche Abdeckung pro Jahr ab
+
+---
+
+### Ungeeignet für Rankings
+
+![](./uploads/5bf743de-ca4f-49e3-964a-122c5d333720.png)
+&lt;!-- .element: class="resize" --&gt;
+
+---
+
+### Domänenspezifische Probleme: Bibliometrie in der Rechtswissenschaft
+
+&gt; „Bibliometrische Verfahren sind in der Rechtswissenschaft nur eingeschränkt in der Lage, Forschungsleistungen zu messen.“ (Wissenschaftsrat 2012)
+
+- Praxis vs. Wissenschaft: Nicht Nachweis von Ideen, sondern Autoritäten für Aussagen
+&lt;!-- .element: class="fragment" --&gt;
+- Zitate in der Rechtswissenschaft haben nicht nur Nachweis- sondern Diskussions- und Kommentarfunktion
+&lt;!-- .element: class="fragment" --&gt;
+- Standardkommentare, Gerichtsentscheidungen, Lehrbücher und Praktikerliteratur ohne "wissenschaftlichem" Anspruch (i.S.v. Forschung)
+&lt;!-- .element: class="fragment" --&gt;
+
+---
+
+
+## 4. Zitationsgraph als Knowledge Graph
+
+![](./uploads/97d492b6-ffc6-4782-86cc-d1ab11b7de0b.png)
+&lt;div style="text-align:right; font-size:10pt"&gt;&lt;a href=https://yashuseth.blog/2019/10/08/introduction-question-answering-knowledge-graphs-kgqa&gt;Source: yashuseth.blog/2019/10/08/introduction-question-answering-knowledge-graphs-kgqa&lt;/a&gt;&lt;/div&gt;
+
+---
+
+![](./uploads/34c63a19-4f1c-41f9-996e-c0892eb4033c.png)
+
+
+Erweiterung des Zitationsgraphs zum Wissensgraphen als Forschungsinstrument der Wissenschaftsgeschichte ("Historische Bibliometrie")
+
+---
+
+### Insbesondere: Knowledge Graph einer akademischen Disziplin
+
+erfasst die Strukturen von
+
+&lt;img style="width:30vw; float:right; margin-left: 20px;" src="./uploads/f898f341-d3da-4a96-8502-83bf27b48ddc.png" /&gt;
+
+- akademischer Wissensproduktion: Werke, die auf andere Werke verweisen
+&lt;!-- .element: class="fragment" data-fragment-index="1" --&gt;
+- dem sozialen Netzwerk von Wissenschaftlern, Institutionen, Konferenzen ...
+&lt;!-- .element: class="fragment" data-fragment-index="2" --&gt;
+
+---
+
+### Komplexität des Datenmodells vs. Kosten der Datenbeschaffung
+
+&lt;img style="width:25vw; float:right; margin-left: 20px;" src="./uploads/46192067-d9bf-4325-aca5-8a4f47482869.jpg" /&gt;
+
+
+Abwägung zwischen "Reichhaltigkeit" und Datenverfügbarkeit &amp; Nutzbarkeit des Knowledge Graphs:
+
+- muss genügend **diskrete Entitäten** bereitstellen (Beispiel: Author-Knoten vs. Author-Daten in Publikationsmetadaten)  
+&lt;!-- .element: class="fragment" data-fragment-index="1" --&gt;
+- Daten müssen **verfügbar/generierbar** sein (Beispiel: Publikationen vs. akademische Konferenzen)
+&lt;!-- .element: class="fragment" data-fragment-index="2" --&gt;
+- Kosten für die Erzeugung nicht verfügbarer Daten (Beispiel: Zitierextraktion aus PDFs)
+&lt;!-- .element: class="fragment" data-fragment-index="3" --&gt;
+
+---
+
+### Datenmodell: Entwurf
+
+![](./uploads/942e44f6-abb2-419a-a288-9c00fe24db9e.png)
+
+Vorteile: 
+- kein reines Zitationsnetzwerk, erfasst auch einen teil des Forschungsprozesses
+&lt;!-- .element: class="fragment"  --&gt;
+- OpenAlex.org als Open-Access-Datenanbieter mit passendem Datenmodell 
+&lt;!-- .element: class="fragment"  --&gt;
+
+---
+
+## 5. Probleme beim Aufbau eines Zitations-Wissensgraphens
+
+---
+
+### Vorhandene Datenquellen
+
+- Institutionen: Research Organization Registry (ror.org)
+&lt;!-- .element: class="fragment"  --&gt;
+- Buch- und Autor\:innendaten: Gemeinsame Normdatei (GND) via lobid.org
+&lt;!-- .element: class="fragment"  --&gt;
+- Zitationsdaten: OpenAlex / Wikicite (?)
+&lt;!-- .element: class="fragment"  --&gt;
+- Lebensdaten: Wikidata
+&lt;!-- .element: class="fragment"  --&gt;
+
+---
+
+### State-of-the Art Extraktionstools können keine Fußnoten
+
+- Grobid, AnyStyle, ExCite
+&lt;!-- .element: class="fragment"  --&gt;
+- Technologie: Conditional Random Fields (Traditionalles Machine Learning) 
+&lt;!-- .element: class="fragment"  --&gt;
+![](./uploads/9adcf588-a49e-4845-ab77-154674b6a34b.jpg =x300)
+&lt;!-- .element: class="fragment"  --&gt;
+
+---
+
+### Beispiel: Literaturverzeichnis
+
+![](./uploads/0fe1e376-465c-4518-a7b7-524fea1ba245.png)
+
+
+---
+
+### Beispiel: Fußnote
+
+![](./uploads/d0297c2f-90d6-48b5-9b3a-9a71644bdc26.png)
+&lt;!-- .element: class=resize --&gt;
+
+----
+
+![](./uploads/f31dfff9-4e1b-46c7-8266-608a883d5c5c.png)
+&lt;!-- .element: class=resize --&gt;
+
+---
+
+### Beispiel: ExCite Performance
+
+
+| Trainingsdaten | Extraktionsgenauigkeit | Segmentierungsgenauigkeit |
+| --- | --- | --- |
+| Standard | 0.24 | 0.37 |
+| Fußnotiert | 0.26 | 0.37 |
+| Kombiniert | 0.22 | 0.47 |
+
+Quelle: [Boulanger/Iurshina (2022), Tabelle 1](http://ceur-ws.org/Vol-3220/#paper3). 
+
+---
+
+### Ersetzen LLMs das Machine Learning?
+
+![](./uploads/b5c962e5-3208-4c61-96d5-9af8c0552211.png =x200)
+
+
+- [Frühe Experimente](https://gist.github.com/cboulanger/d771a65495fee1751b8685d993cb66bc) (2022, text-davinci-003) zeigten die Leistungsfähigkeit von LLMs bei der Extraktion von Referenzen aus unstrukturierten Textdaten
+&lt;!-- .element class="fragment" --&gt;
+- Neue Modelle versprechen sogar bessere Ergebnisse, VLMs können PDFs verarbeiten
+&lt;!-- .element class="fragment" --&gt;
+- Methoden: Prompt Engineering, RAG, Finetuning...
+&lt;!-- .element class="fragment" --&gt;
+aber...
+&lt;!-- .element class="fragment" --&gt;
+
+---
+
+### ... können wir den Ergebnissen vertrauen?
+
+![](./uploads/11676b06-a16a-49ca-afa0-a74a9f13c8c4.png)
+
+---
+
+### Weitere Nachteile der großen LLMs
+
+- Kosten
+&lt;!-- .element class="fragment" --&gt;
+- Geschwindigkeit
+&lt;!-- .element class="fragment" --&gt;
+- Abhängigkeiten
+&lt;!-- .element class="fragment" --&gt;
+- Reproduzierbarkeit
+&lt;!-- .element class="fragment" --&gt;
+- Ressourcenverbrauch
+&lt;!-- .element class="fragment" --&gt;
+
+---
+
+### Wir brauchen eine robuste Test- und Evaluierungslösung
+
+1. einen hochwertigen Goldstandard für Evaluierung und Training
+&lt;!-- .element class="fragment" --&gt;
+2. flexible tools, die sowohl effizientes ML als auch das Potentiale der LLMs nutzen können
+&lt;!-- .element class="fragment" --&gt;
+3. solide Test- und Evaluierungsalgorithmen zur Erzeugung vergleichbarer Metriken
+&lt;!-- .element class="fragment" --&gt;
+
+---
+
+### Kooperationen und Eigenentwicklungen
+
+&gt; [GROBID](https://grobid.readthedocs.io) is a machine learning library for extracting, parsing and re-structuring raw documents such as PDF into structured XML/TEI encoded documents with a particular focus on technical and scientific publications (sciencialab.com)
+&lt;!-- .element class="fragment" --&gt;
+
+&gt; [LLamore](https://github.com/mpilhlt/llamore): A Python package to extract and evaluate scientific references and citations from free-form text and PDFs using LLM/VLMs (mpcdf.mpg.de)
+&lt;!-- .element class="fragment" --&gt;
+
+&gt; [PDF-TEI-Editor](https://github.com/mpilhlt/pdf-tei-editor): A viewer/editor web app to compare the PDF source and the TEI extraction/annotation result (lhlt.mpg.de)
+&lt;!-- .element class="fragment" --&gt;
+
+---
+
+### Softwareauswahl
+
+| Name | Typ | E2E Eval | Zahl Modelle | Performanz |
+| --- | --- | --- | --- | --- |
+| Grobid | CRF | ✅ | 6 | Schnell aber schlecht
+| Llamore | VLM (Gemini) | ✅ | 1 | Gut, aber langsam
+
+&gt; Locally run "neural models can be up to 50 times slower than CRF, depending on the architecture and available CPU/GPU." (Grobid Docs)
+
+---
+
+### Papers with bibliography
+![](https://)![](./uploads/a95e0ce3-dd3b-4837-bf4b-3160955e7770.png)
+
+---
+
+### Papers with footnotes
+
+![](https://)![](./uploads/effa28e8-ae0a-427f-acfb-2c9a55be94ca.png)
+
+
+---
+
+### Wege zu einem Goldstandard für Fußnotenreferenzen
+
+
+1. TEI-Standard hat keine klaren Annotationsregeln für Fußnotenreferenzen &lt;br /&gt; ➔ Klärung/Standarderweiterung [github.com/mpilhlt/bibliographic-tei](https://github.com/mpilhlt/bibliographic-tei/)
+&lt;!-- .element class="fragment" --&gt;
+2. Annotationen sind zeitaufwändig und fehleranfällig &lt;br/&gt; ➔ PDF-TEI-Editor
+&lt;!-- .element class="fragment" --&gt;
+
+---
+
+[![](./uploads/100383e8-c439-4899-9fae-1592568bbcfc.png)](https://mpilhlt.github.io/bibliographic-tei/10.1111_1467-6478.00057.html#instance-28)
+
+---
+
+### PDF-TEI-Editor
+
+- in Entwicklung
+&lt;!-- .element class="fragment" --&gt;
+- Synopse PDF - TEI
+&lt;!-- .element class="fragment" --&gt;
+- Echtzeit-TEI-Validierung
+&lt;!-- .element class="fragment" --&gt;
+- Modulare einbindung von *extraction engines* (Grobid, LLamore)
+&lt;!-- .element class="fragment" --&gt;
+
+---
+
+[![](./uploads/241f7631-82b2-4a66-a3f1-6f7d8939eed1.png)](https://pdf-tei-editor.panya.de)
+
+---
+
+## 6. Analysen / Visualisierungen
+
+![](./uploads/61164340-2b90-4358-9ad3-6ec53e620e53.png)
+&lt;!-- .element: class=resize --&gt;
+
+
+---
+
+### Analysetools
+
+- Import in spezialisierte Forschungssoftware (z. B. [NodeGoat](https://nodegoat.net/), [Histograph](http://histograph.eu/) oder [Palladio](https://hdlab.stanford.edu/palladio/))
+&lt;!-- .element: class="fragment" data-fragment-index="1" --&gt;
+- Export in eine Graphdatenbank wie [Neo4J](https://neo4j.com) oder [Gephi](https://gephi.org/) zur Analyse und Visualisierung
+&lt;!-- .element: class="fragment" data-fragment-index="2" --&gt;
+- Analyse von Graphdaten in einem [Jupyter Notebook](https://github.com/cboulanger/ehrlich-bibliometrie/blob/main/ehrlich-bibliometrie.ipynb) 
+&lt;!-- .element: class="fragment" data-fragment-index="3" --&gt;
+- Online-Visualisierungen (Beispiele folgen)
+&lt;!-- .element: class="fragment" data-fragment-index="4" --&gt;
+
+&lt;div style="display:flex; gap:20px; width:100%;justify-content: center;"&gt;&lt;a href="https://nodegoat.net/"&gt;&lt;img src=./uploads/2cca59ac-48d7-4da4-ad60-1946ba9e8109.png style="width:150px" class="fragment" data-fragment-index="1" /&gt;&lt;/a&gt;&lt;a href="https://neo4j.com"&gt;&lt;img src=./uploads/68c9e0e5-0ca7-481a-8dca-b30d29249a9a.png style="width:300px" class="fragment" data-fragment-index="2" /&gt;&lt;/a&gt;&lt;a href="https://jupyter.org/"&gt;&lt;img src=./uploads/f71b9a52-144d-4341-ad3e-d7e6b749e3dd.png style="width:300px" class="fragment" data-fragment-index="3" /&gt;&lt;/a&gt;&lt;/div&gt;
+
+---
+
+### Beispiel 1: Journal-Kartierung
+
+[![](./uploads/46119be5-c9ef-4153-9ccd-7e733afcbc06.png =300x)](https://cboul.pages.mpcdf.de/journal-network-viewer/)
+
+Journal Network Viewer, DOI [10.17617/1.FBYY-GV80](https://doi.org/10.17617/1.FBYY-GV80)
+
+---
+
+### Beispiel 2: &lt;br&gt;Meistzitierte Autoren in der JLS
+
+
+[![](./uploads/bb19088b-ed30-407a-a4e4-f9664ec82449.png =300x)](https://cboulanger.github.io/jls-bibliometry/jls-most-cited-with-most-citing-1984-1993.html)
+https://cboulanger.github.io/jls-bibliometry/
+
+---
+
+### Beispiel 3: &lt;br&gt;Lehrbücher, die Eugen Ehrlich zitieren
+
+
+[![](./uploads/31394173-2dba-451d-89c2-381617c79bb2.png =300x)](https://cboulanger.github.io/ehrlich-bibliometrie/13-rsoz-lehrbuecher-ehrlich-citation-network.html)
+
+---
+
+## Vielen Dank für Ihre Aufmerksamkeit! 
+
+
+https://www.lhlt.mpg.de/boulanger
+boulanger@lhlt.mpg.de
+
+
+---
+
+
+&lt;style type="text/css"&gt;
+    
+
+    /* define variables for the slide css */
+    .reveal {
+        /* 
+         * Dynamically adapt font sizes to viewport width, 
+         *   given the static ratio of 960 x 700 used by HedgeDoc
+         *   1. Define the Ratio: 960 / 700 = 1.3714 
+         *   2. Define the Unit: The smallest of 1vw OR 
+         *      (1vh * Ratio)
+         *   3. multiply your desired "vw" size by this unit
+         */
+        --u: min(1vw, 1.3714vh);
+        
+        /* background-image */
+        --background-url: url("./uploads/2e2f7ded-205d-4729-b109-482720a53686.png")
+    }
+  
+  
+     /* decrease the size of the font in the preview slides */
+    div.ui-view-area section * {
+        font-size: calc(.5 * var(--u));
+    } 
+
+    .reveal h1.raw {
+        font-size: calc(6 * var(--u));
+    }
+
+    .reveal h2.raw {
+        font-size: calc(5 * var(--u));
+    }
+
+    .reveal h3.raw {
+        font-size: calc(4 * var(--u));
+    }
+
+    .reveal h4.raw {
+        font-size: calc(3.5 * var(--u));
+    }
+
+    .reveal section {
+        font-size: calc(2 * var(--u));
+    }
+
+    /* set the background image */
+    .reveal .slide-background-content::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: var(--background-url);
+        background-size: cover;
+        background-position: center;
+    }        
+
+    /* all backgrounds except the title page 
+     * have an opacity 0f 30% */
+    .backgrounds &gt; .slide-background:not(:first-child) .slide-background-content::before {
+        opacity: 0.1;
+    }
+
+    /* resize images dynamically */
+    img.resize {
+        max-height: calc(100vh - 300px);
+        width: auto;
+    }
+
+    
+    /* center a block element horizontally */
+    .reveal .centered {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* blockquotes */
+    .reveal blockquote {
+        display: block;
+        position: relative;
+        text-align: left;
+        width: 80%;
+        margin: 20px auto;
+        padding: 10px 10px 10px 10px;
+        font-style: italic;
+        background: rgba(0, 0, 0, 0.05);
+        box-shadow: 0px 0px 2px rgb(0, 0, 0);
+    }
+
+    .reveal blockquote &gt; p {
+        font-size: clamp(0.3em, 1fr, 1.2em);
+        line-height: 1.2; 
+        overflow-wrap: break-word; 
+    }
+
+    /* images */
+    .reveal section img {
+        margin: 15px 0px;
+        background: rgba(255, 255, 255, 0.12);
+        border: 0px solid #222;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    }
+    
+    .svg-with-background &gt; img, img.svg-with-background {
+        height:10vh;
+        background: white !important;
+        padding: 3px;
+    }
+
+    /* lists */
+    section ul, section ol {
+        display: block !important
+    }
+    section li {
+        margin-bottom: 0.5em;
+    }
+
+    /* no scrollbars on graphviz diagrams */
+    section pre.graphviz {
+        overflow: hidden;
+    }
+    
+    /* image captions */
+    section .caption {
+        font-size: 2vw;
+    }
+    
+    /* add a pulse effect to links */
+    .reveal a:not(:hover) img {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: #2a76dd;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.55); 
+      animation: pulsate 1s ease-out infinite;
+    }
+    @-webkit-keyframes pulsate {
+        0%   { box-shadow: 0 0 5px rgba(0, 0, 0, 0.55); }
+        50%  { box-shadow: 0 0 17px rgba(0, 0, 0, 0.55); }
+        100% { box-shadow: 0 0 5px rgba(0, 0, 0, 0.55); }
+    }
+
+    /**
+     *  Slide Layouts 
+     **/
+
+    /* Two columns, no heading */
+    section.two-columns &gt; div {
+          display: grid;
+          grid-template-columns: auto auto; 
+          grid-gap: 10px;
+    }
+    .column-1 {
+        grid-column: 1;
+    }
+    .column-2 {
+        grid-column: 2;
+    }
+
+    /* Two columns with header and footer */
+    .slides section.two-columns-header-footer &gt; div  {
+        display: grid;
+        height: 120vh;
+        grid-template-areas:
+            "header header"
+            "left right"
+            "footer footer";
+        grid-template-rows: 10% fit-content(70%) 10%; 
+        grid-template-columns: fit-content(1fr) 1fr;
+        grid-gap: 30px;
+    }
+    .slides section.two-columns-header-footer &gt; div &gt; h2,
+    .slides section.two-columns-header-footer &gt; div &gt; h3,
+    .slides section.two-columns-header-footer &gt; div &gt; h4 {
+        grid-area: header;
+        position: relative;
+        /*top: -5vh;*/ 
+    }
+    .slides section.two-columns-header-footer .left {
+        grid-area: left;
+        align-self: center;
+    }
+    .slides section.two-columns-header-footer .right {
+        grid-area: right;
+
+    }
+    .slides section.two-columns-header-footer .footer {
+        grid-area: footer;
+    }
+    
+    /* layout with two images and captions */
+    section div.two-images-with-captions {
+        display: grid; 
+        grid-template-rows: auto; 
+        grid-template-columns: auto auto; 
+        grid-gap: 10px; 
+    }
+&lt;/style&gt;</div>
+<div class="ui-toc dropup unselectable hidden-print" style="display:none;">
+<div class="pull-right dropdown">
+<a aria-expanded="false" aria-haspopup="true" class="ui-toc-label btn btn-default" data-toggle="dropdown" href="#" id="tocLabel" role="button" title="Table of content">
+<i class="fa fa-bars"></i>
+</a>
+<ul aria-labelledby="tocLabel" class="ui-toc-dropdown dropdown-menu" id="ui-toc">
+</ul>
+</div>
+</div>
+<div class="ui-affix-toc ui-toc-dropdown unselectable hidden-print" data-spy="affix" id="ui-toc-affix" style="display:none;"></div>
+</body>
+</html>
+<script src="./js/mathjax-config-extra.js"></script>
+<script defer="" src="./build/MathJax/MathJax.js"></script>
+<script defer="" src="./build/MathJax/config/TeX-AMS-MML_HTMLorMML.js"></script>
+<script defer="" src="./build/MathJax/config/Safe.js"></script>
+<script src="config"></script><script defer="defer" src="build/vendors~common.6ca6a20d83df19066d96.js"></script><script defer="defer" src="build/common.deaa5ba7add85ca9499b.js"></script><script defer="defer" src="build/vendors~cover~cover-pack~index~index-pack~pretty~pretty-pack~slide~slide-pack.3a55279942375e344a4b.js"></script><script defer="defer" src="build/vendors~index~index-pack~pretty~pretty-pack~slide~slide-pack.00ba21c360fe4ee91e15.js"></script><script defer="defer" src="build/pretty-pack.6e275e1bc24af120eb14.js"></script>

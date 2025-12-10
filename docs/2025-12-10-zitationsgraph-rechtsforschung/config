@@ -1,0 +1,12 @@
+window.domain = 'pad.gwdg.de'
+window.urlpath = ''
+window.debug = false
+window.version = '1.10.3-ec3a78e0840a5ae061412ff9bb4ac4ffa5d19f09'
+
+window.allowedUploadMimeTypes = ["image/jpeg","image/png","image/gif","image/svg+xml"]
+
+window.linkifyHeaderStyle = 'keep-case'
+
+window.DROPBOX_APP_KEY = ''
+
+window.cookiePolicy = 'lax'
