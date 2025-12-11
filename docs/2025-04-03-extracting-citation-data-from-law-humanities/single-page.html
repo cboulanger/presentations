@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0, user-scalable=no" name="viewport"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="  # Extracting Citation Data from Law and Humanities Scholarship Using LLMs and a Specialized Gold S" name="description"/>
+<meta content="Extracting Citation Data from Law and Humanities Scholarship Using LLMs and a Specialized Gold Standard Dataset - HedgeDoc" property="og:title"/>
+<meta content="website" property="og:type"/>
+<meta content="./icons/android-chrome-512x512.png" property="og:image"/>
+<meta content="HedgeDoc logo" property="og:image:alt"/>
+<meta content="image/png" property="og:image:type"/>
+<base href="./"/>
+<title>Extracting Citation Data from Law and Humanities Scholarship Using LLMs and a Specialized Gold Standard Dataset - HedgeDoc</title>
+<link href="./icons/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="./icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="./icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="./icons/site.webmanifest" rel="manifest"/>
+<link color="#b51f08" href="./icons/safari-pinned-tab.svg" rel="mask-icon"/>
+<link href="./icons/favicon.ico" rel="shortcut icon"/>
+<meta content="HedgeDoc - Ideas grow better together" name="apple-mobile-web-app-title"/>
+<meta content="HedgeDoc - Ideas grow better together" name="application-name"/>
+<meta content="#b51f08" name="msapplication-TileColor"/>
+<meta content="./icons/browserconfig.xml" name="msapplication-config"/>
+<meta content="#b51f08" name="theme-color"/>
+<link href="./build/emojify.js/dist/css/basic/emojify.min.css" rel="stylesheet"/>
+<link href="build/font-pack.4362583c9249021b5028.css" rel="stylesheet"/><link href="build/2.15c517ea2148f55c8206.css" rel="stylesheet"/><link href="build/3.ec6e7d6280fcd73e729d.css" rel="stylesheet"/><link href="build/pretty-styles-pack.2fb0d01138de2df6de0a.css" rel="stylesheet"/><link href="build/pretty-styles.8aa1888af7df52aee395.css" rel="stylesheet"/><link href="build/1.1666d9d869a0532d9bce.css" rel="stylesheet"/><link href="build/pretty.6b8d0fd475bd77f9c4c4.css" rel="stylesheet"/>
+</head>
+<body style="display:none;">
+<div class="ui-infobar container-fluid unselectable hidden-print">
+<small>
+<span>
+<span class="ui-lastchangeuser"> <i class="ui-user-icon small" data-placement="right" data-toggle="tooltip" style="background-image: url(./user/boulanger%40lhlt.mpg.de/avatar.svg);" title="boulanger@lhlt.mpg.de"></i></span>
+                
+                 <span class="text-uppercase ui-status-lastchange"></span>
+<span class="ui-lastchange text-uppercase" data-createtime="Fri Jan 31 2025 09:05:26 GMT+0000 (Coordinated Universal Time)" data-updatetime="Thu Dec 11 2025 09:52:33 GMT+0000 (Coordinated Universal Time)"></span>
+</span>
+<span class="pull-right">1057 views <a class="ui-edit" href="#" title="Edit this note"><i class="fa fa-fw fa-pencil"></i></a></span>
+<br/>
+</small>
+</div>
+<div class="container markdown-body" id="doc">
+
+# Extracting Citation Data from Law and Humanities Scholarship Using LLMs and a Specialized Gold Standard Dataset
+
+TU Berlin, 03.04.2025
+Christian Boulanger, David Carreto Fidalgo, Andreas Wagner
+
+&lt;!-- .slide: data-background="" --&gt;
+
+&lt;!-- MPG logo --&gt;
+&lt;img src="./uploads/7296f190-6075-4f54-8ce3-f94a47c9e5f8.png" class="logo"/&gt;
+
+&lt;!-- MPCDF logo --&gt;
+&lt;img src="./uploads/96f7332e-c30f-4c32-a21e-30a31c92cf1b.svg" class="logo" style="transform: scale(1.5) translateX(80px); margin-left: 20px;"/&gt;
+
+---
+
+## Research Question
+
+Christian Boulanger
+
+---
+
+### Use case: citation graphs in intellectual history
+
+
+![](./uploads/942e44f6-abb2-419a-a288-9c00fe24db9e.png =500x)
+
+- Citatation graphs can be used to discover patterns and relationships in knowledge production
+&lt;!-- .element class="fragment" --&gt;
+- They can help with reconstructing influences, measuring reception
+&lt;!-- .element class="fragment" --&gt;
+- Example: change of most-cited authors over time
+&lt;!-- .element class="fragment" --&gt;
+
+---
+
+[![](./uploads/44cceb84-d990-49cd-8cec-8207d554793b.png)](https://cboulanger.github.io/jls-bibliometry/jls-most-cited-with-most-citing-1984-1993.html)
+&lt;!-- .element class=resize --&gt;
+
+Journal of Law and Society, most-cited authors with most-citing authors, 1994 - 2003 
+
+---
+
+&lt;!-- .slide: class="two-columns-header-footer" --&gt;
+
+### Problem 1: Extremely poor coverage of (historical) SSH by bibliometric datasources
+
+&lt;div class=left&gt;
+
+![](./uploads/f2bab7a1-0029-4995-9b76-691fa7ee3e3a.png =x50)
+![](./uploads/cbc6a243-8eba-4b62-bc95-27a04d911f04.png =x50)
+![](./uploads/0d1581a7-9c4e-4b81-8977-73d588a5db75.png =x50)
+
+&lt;/div&gt;
+
+&lt;div class=right&gt;
+
+- Data sources for citation graphs: bibliometric data bases (Web of Science, Scopus, OpenAlex)
+&lt;!-- .element class="fragment" --&gt;
+- WoS and Scopus are very expensive and have very restrictive licenses, we should not have to depend on them
+&lt;!-- .element class="fragment" --&gt;
+- All databases typically lack coverage for journals which are not &lt;span class="fragment"&gt;"A-journal"&lt;/span&gt;&lt;span class="fragment"&gt;, pre-digital&lt;/span&gt;&lt;span class="fragment"&gt;, or English language.&lt;/span&gt;
+&lt;!-- .element class="fragment" --&gt;
+
+
+&lt;/div&gt;
+
+---
+
+### Example
+
+Zeitschrift für Rechtssoziologie (est. 1980!)
+
+![](./uploads/54b82133-d42b-4944-bca6-a1acf478a918.png)
+
+---
+
+### Why? 
+
+- Lack of commercial interest as opposed to STEM, medicine, economics 
+&lt;!-- .element class="fragment" --&gt;
+- Focus on "impact factor" for science evaluation vs. research in intellectual history
+&lt;!-- .element class="fragment" --&gt;
+- and footnotes!
+&lt;!-- .element class="fragment" --&gt;
+
+---
+
+### Problem 2: "Footnotes from hell"
+
+![](./uploads/d0297c2f-90d6-48b5-9b3a-9a71644bdc26.png)
+
+---
+
+### Problem 3: Creating training data is hard 
+
+[![](./uploads/7f3937c3-fcec-4db9-b998-21434384628d.png)](https://github.com/cboulanger/citext )
+
+
+---
+
+### Problem 4: Existing tools cannot handle footnotes
+
+ExCite Performance
+
+| Training Data | Extraction Accuracy | Segmentation Accuracy |
+| --- | --- | --- |
+| Default | 0.24 | 0.37 |
+| Footnoted | 0.26 | 0.37 |
+| Combined | 0.22 | 0.47 |
+
+Source: [Boulanger/Iurshina (2022), Table 1](http://ceur-ws.org/Vol-3220/#paper3). 
+
+---
+
+### LLMs to the rescue?
+
+- [Early experiments](https://gist.github.com/cboulanger/d771a65495fee1751b8685d993cb66bc) (2022, text-davinci-003) showed power of LLMs to extract references from messy textual data
+&lt;!-- .element class="fragment" --&gt;
+- New models promise even better results, VLMs can process PDFs
+&lt;!-- .element class="fragment" --&gt;
+- Methods: prompt engineering, RAG, finetuning, however, first of all, ...
+&lt;!-- .element class="fragment" --&gt;
+
+---
+
+### ... can we trust the results?
+
+![](./uploads/11676b06-a16a-49ca-afa0-a74a9f13c8c4.png)
+
+
+---
+
+### We need a robust testing and evaluation solution, which requires...
+
+1. a high-quality Gold Standard
+&lt;!-- .element class="fragment" --&gt;
+2. a flexible framework that can easily be adapted to a fast-moving technology landscape
+&lt;!-- .element class="fragment" --&gt;
+3. solid testing and evaluation algorithms for producing comparable metrics
+&lt;!-- .element class="fragment" --&gt;
+
+---
+
+## TEI-annotated Gold Standard
+
+Andreas Wagner
+
+----
+
+### TEI XML Encoding
+
+- **Why TEI (1)?**
+    - well-established, well-specified and comprehensive standard for text interchange
+    - beyond reference management / covers citations, crossreferences and other contextual markup
+    - **other corpora!!** *(for generalization &amp; robustness training)*
+- The standard does not solve all difficulties
+    - conceptual: pointers *vs* references
+    - technical: constrained elements *vs* elliptic material
+
+&lt;!-- Example: https://mpilhlt.github.io/bibliographic-tei/10.1111_1467-6478.00057.html#instance-26  --&gt;
+
+----
+
+&lt;!-- .slide: class="two-columns-header-footer" --&gt;
+
+### TEI dataset
+
+&lt;div class="left"&gt;
+
+&lt;img src="./uploads/ac0cbf2a-51a6-4d60-9e3b-f56f8b56ec80.jpg" style="height:400px;margin-top:-120px"&gt;
+
+&lt;/div&gt;
+
+&lt;div class="right"&gt;
+    
+&lt;!-- ![](./uploads/f9ef89e9-5b5e-4640-8fab-bde8de6bfe66.png)
+ --&gt;
+
+&lt;img src="./uploads/c177fb66-d4f7-410d-9854-0e0b0cce235a.jpg" style="height:120px; margin-top:-150px"&gt;
+
+&lt;img src="./uploads/37ae9e10-4ec7-4015-bc83-114738800e16.jpg" style=""&gt;
+
+&lt;/div&gt;
+
+- pdfs (+text), reference strings, parsed structs
+
+
+
+----
+
+### TEI dataset
+
+- 1.100 foot-/endnotes
+- from 25 articles from 10 DOAJ journals
+    - humanities (legal and historical) focus
+    - French, German, Spanish, Italian, Portuguese
+    - 1958-2018
+- \&gt;1.600 references (?)
+- **still work in progress**
+    - *(we changed strategy to OA and include pdfs mid-way)*
+
+----
+
+### TEI XML Encoding
+
+- **Why TEI (2)?**
+    - **Tooling!!** For Information Extraction, there is ***Grobid***!
+        - Compare our tool with Grobid's performance
+        - Offer more training data to Grobid (and others)
+        - *but what exactly is performance?*
+
+---
+
+## Llamore: Presentation, Evaluation and Results
+
+David Carreto Fidalgo
+
+---
+
+### Llamore
+
+**L**arge **LA**nguage **MO**dels for **R**eference **E**xtraction
+
+- **What is it?** 
+A python package to *extract citation data* from raw input *text or PDFs* using LLMs (multimodal) and to *evaluate* the extraction performance.
+
+:::info
+**Text / PDFs ---&gt; References (TEI, XML)**
+**Gold References ---&gt; Evaluation metric (F1)**
+:::
+
+- **Objectives**
+    - light weight: less than 2000 lines of code
+    - compatibility with open and closed LLMs
+&lt;!-- .element class="fragment" --&gt;
+
+---
+
+### How does it work?
+
+```bash
+pip install llamore
+```
+#### Extraction
+
+```python
+from llamore import GeminiExtractor, OpenaiExtractor
+
+extractor = GeminiExtractor(api_key="my_api_key")
+
+references = extractor(pdf="/path/to/my.pdf")
+# or
+references = extractor(text="My raw input string")
+
+# Export to TEI biblStructs
+references.to_xml("./references.xml")
+```
+
+#### Evaluation
+
+```python
+from llamore import F1
+
+f1 = F1(levenshtein_distance=0)
+f1.compute_macro_average(references, gold_references)
+```
+
+---
+
+&lt;!-- .slide: class="two-columns-header-footer" --&gt;
+
+&lt;div class="header"&gt;
+    
+### Evaluation - Compare references
+
+Precision = Matches / Predicted Elements
+Recall = Matches / Gold Elements
+**---&gt; F1-Score**
+
+&lt;/div&gt;
+
+&lt;div class="left"&gt;
+Extracted Reference
+    
+```json
+{
+  "analytic_title": "Citizenship and Feminist Politics", 
+  "monographic_title": "Citizenship",
+  "authors": [
+    {
+      "forename": "A",
+      "surname": "Phillips"
+    }
+  ],
+  "publication_date": "1991",
+}
+```
+
+&lt;/div&gt;
+
+&lt;div class="right"&gt;
+Gold Reference
+    
+```json
+{
+  "analytic_title": "Citizenship and Feminist Politics", 
+  "monographic_title": "Citizenship",
+  "authors": [
+    {
+      "forename": "A.",
+      "surname": "Phillips"
+    }
+  ],
+  "publication_date": "1991",
+  "cited_range": "77"
+}
+```
+    
+&lt;/div&gt;
+
+---
+
+### Evaluation - Align references
+
+| | Gold1 | Gold2 |
+| --- | --- | --- |
+| **Ref1** | 0.1 | 0.9 
+| **Ref2** | 0.9 | 0.2
+| **Ref3** | 0.8 | 0.0
+
+Maximize the total F1-score while ensuring a unique assignment
+
+:::info
+**Unbalanced Assignment Problem**
+:::
+
+&lt;!-- 
+- Even aligning 100s of references takes ~seconds
+- Same method is used when aligning authors, etc. (lists)
+--&gt;
+
+---
+
+### Does it work?
+![](https://)![](./uploads/a95e0ce3-dd3b-4837-bf4b-3160955e7770.png)
+
+
+---
+
+### Does it work?
+
+![](https://)![](./uploads/effa28e8-ae0a-427f-acfb-2c9a55be94ca.png)
+
+---
+
+## Conclusion
+
+Christian Boulanger
+
+---
+
+&lt;!-- .slide: class="two-columns-header-footer" --&gt;
+
+### Takeaways
+
+&lt;div class="left" style="transform: translateY(-50px);"&gt;
+
+![](https://)![](./uploads/a95e0ce3-dd3b-4837-bf4b-3160955e7770.png =150x)
+&lt;!-- .element class="fragment" data-fragment-index="1" --&gt;
+    
+![](https://)![](./uploads/effa28e8-ae0a-427f-acfb-2c9a55be94ca.png =150x)
+&lt;!-- .element class="fragment" data-fragment-index="2" --&gt;
+
+&lt;/div&gt;
+
+&lt;div class="right"&gt;
+
+- Grobid still better choice for literature it was trained on, since it is much faster &amp; less resource-intensive
+&lt;!-- .element class="fragment" data-fragment-index="1" --&gt;
+- For footnoted literature, experiments with LLamore/Gemini show 3x better performance
+&lt;!-- .element class="fragment" data-fragment-index="2" --&gt;
+- Performance for pure reference extraction, no context, cross-referencing, etc.
+&lt;!-- .element class="fragment" data-fragment-index="3" --&gt;
+
+&lt;/div&gt;
+
+---
+
+&lt;!-- .slide: class="two-columns-header-footer" --&gt;
+
+## Future work
+
+&lt;div class=left&gt;
+
+![](./uploads/c1a5f47c-2d4e-4a28-812a-08f6ccd634da.png)
+
+&lt;/div&gt;
+
+&lt;div class=right&gt;
+&lt;!-- .element style="text-align:left" --&gt;
+    
+We plan to ...
+
+- produce more training data and test metrics
+&lt;!-- .element class="fragment" --&gt;
+- add support for: citations in context (approving, contracting, etc.), resolution of op cit., pages cited, number of citations to same work, etc. 
+&lt;!-- .element class="fragment" --&gt;
+- test and finetune smaller, local, open source models
+&lt;!-- .element class="fragment" --&gt;
+
+&lt;/div&gt;
+
+---
+
+Thank you for your attention!
+
+Repo: https://github.com/mpilhlt/llamore
+
+Slides: ./p/LjbjSAMyj
+
+
+---
+
+## Appendix
+
+----
+
+### Challenges: (a) figure out and&lt;br&gt;(b) find capturing devices for...
+
+&lt;img src="./uploads/38c9a308-d977-4922-ab42-68c32ecacd6f.png" style="height:60px;float:right;"&gt;
+
+- varying citation styles
+    - volumes or pages?
+    - first page vs cited page?
+
+&lt;img src="./uploads/e912abc5-76de-433c-b4d3-04e9a36b2bf8.png" style="height:200px;float:right;"&gt;
+
+- (multilingual) terminology
+    - contributor roles: *"eds", "hrsg. v."*
+    - special terms: *"passim", "ibid.", "n.d."*
+    - canonical citations (Bible studies, Roman law, Classic lit.)
+- ellipses &amp; abbreviations, crossreferences
+
+
+----
+
+
+&lt;!-- Custom styles for this presentation --&gt;
+
+&lt;style type="text/css"&gt;
+    
+    
+
+    /* adapt some font sizes */
+    h1.raw{font-size: 4vw;}
+    h2.raw{font-size: 4vw;}
+    h3.raw{font-size: 3vw;}
+    .reveal section {font-size: 2vw;}
+
+    /* make title text readable against dark background */
+    section.present:first-of-type p,
+    section.present:first-of-type h1.raw {
+        color: white; 
+        text-shadow: 4px 4px 6px black;
+    }
+
+    /* same for title page logos*/
+    img.logo { 
+        display:none 
+    }
+    .reveal section img.logo {
+        display: inline;
+        border: none;
+        background: none;
+        box-shadow:none;
+        width:30vw;
+    }
+
+    /* set the background image
+     * requires &lt;!-- .slide: data-background="" --&gt; */
+    .slide-background-content::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url("");
+        background-size: cover;
+        background-position: center;
+    }
+
+    /* all backgrounds except the title page 
+     * have an opacity 0f 30% */
+    .backgrounds &gt; .slide-background:not(:first-child) .slide-background-content::before {
+        opacity: 0.1;
+    }
+
+    /* place two logos on the bottom left, center and right of all pages except the title page */
+    .backgrounds &gt; .slide-background:not(:first-child) .slide-background-content {
+        position: relative;
+        background-image: url('./uploads/7296f190-6075-4f54-8ce3-f94a47c9e5f8.png'), url('./uploads/96f7332e-c30f-4c32-a21e-30a31c92cf1b.svg'); 
+        background-position: left 30px bottom 30px,  right 30px bottom 50px;
+        background-repeat: no-repeat;
+        background-size: 20%, 30%;
+        opacity: 0.3;
+    }
+
+    
+    /* resize images dynamically */
+    img.resize {
+        max-height: calc(100vh - 200px);
+        width: auto;
+    }
+
+    /* blockquotes */
+    .reveal blockquote {
+        display: block;
+        position: relative;
+        text-align: left;
+        width: 80%;
+        margin: 20px auto;
+        padding: 10px 10px 10px 10px;
+        font-style: italic;
+        background: rgba(0, 0, 0, 0.05);
+        box-shadow: 0px 0px 2px rgb(0, 0, 0);
+    }
+
+    .reveal blockquote &gt; p {
+        font-size: clamp(0.3em, 1fr, 1.2em);
+        line-height: 1.2; 
+        overflow-wrap: break-word; 
+    }
+
+    /* images */
+    .reveal section img {
+        margin: 15px 0px;
+        background: none;
+        border: none;
+        box-shadow: none;
+    }
+
+    /* lists */
+    section ul, section ol {
+        display: block !important
+    }
+    section li {
+        margin-bottom: 0.5em;
+    }
+
+    /* no scrollbars on graphviz diagrams */
+    section pre.graphviz {
+        overflow: hidden;
+    }
+    
+    /* image captions */
+    section .caption {
+        font-size: 2vw;
+    }
+    
+    /* add a pulse effect to links */
+    .reveal a:not(:hover) img {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: #2a76dd;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.55); 
+      animation: pulsate 1s ease-out infinite;
+    }
+    @-webkit-keyframes pulsate {
+        0%   { box-shadow: 0 0 5px rgba(0, 0, 0, 0.55); }
+        50%  { box-shadow: 0 0 17px rgba(0, 0, 0, 0.55); }
+        100% { box-shadow: 0 0 5px rgba(0, 0, 0, 0.55); }
+    }
+
+    /**
+     *  Slide Layouts 
+     **/
+
+    /* Two columns with header and footer */
+    .slides section.two-columns-header-footer &gt; div  {
+        display: grid;
+        height: 120vh;
+        grid-template-areas:
+            "header header"
+            "left right"
+            "footer footer";
+        grid-template-rows: 20% fit-content(70%) 10%; 
+        grid-template-columns: fit-content(1fr) 1fr;
+        grid-gap: 30px;
+    }
+    .slides section.two-columns-header-footer &gt; div &gt; h2,
+    .slides section.two-columns-header-footer &gt; div &gt; h3,
+    .slides section.two-columns-header-footer &gt; div &gt; h4 {
+        grid-area: header;
+        position: relative;
+        /*top: -5vh;*/ 
+    }
+    
+    .slides section.two-columns-header-footer .header {
+        grid-area: header;
+    }
+    
+    .slides section.two-columns-header-footer .left {
+        grid-area: left;
+        align-self: center;
+    }
+    .slides section.two-columns-header-footer .right {
+        grid-area: right;
+    }
+    .slides section.two-columns-header-footer .footer {
+        grid-area: footer;
+    }
+    
+    /* layout with two images and captions */
+    section div.two-images-with-captions {
+        display: grid; 
+        grid-template-rows: auto; 
+        grid-template-columns: auto auto; 
+        grid-gap: 10px; 
+    }
+
+&lt;/style&gt;
+</div>
+<div class="ui-toc dropup unselectable hidden-print" style="display:none;">
+<div class="pull-right dropdown">
+<a aria-expanded="false" aria-haspopup="true" class="ui-toc-label btn btn-default" data-toggle="dropdown" href="#" id="tocLabel" role="button" title="Table of content">
+<i class="fa fa-bars"></i>
+</a>
+<ul aria-labelledby="tocLabel" class="ui-toc-dropdown dropdown-menu" id="ui-toc">
+</ul>
+</div>
+</div>
+<div class="ui-affix-toc ui-toc-dropdown unselectable hidden-print" data-spy="affix" id="ui-toc-affix" style="display:none;"></div>
+</body>
+</html>
+<script src="./js/mathjax-config-extra.js"></script>
+<script defer="" src="./build/MathJax/MathJax.js"></script>
+<script defer="" src="./build/MathJax/config/TeX-AMS-MML_HTMLorMML.js"></script>
+<script defer="" src="./build/MathJax/config/Safe.js"></script>
+<script src="config"></script><script defer="defer" src="build/vendors~common.6ca6a20d83df19066d96.js"></script><script defer="defer" src="build/common.deaa5ba7add85ca9499b.js"></script><script defer="defer" src="build/vendors~cover~cover-pack~index~index-pack~pretty~pretty-pack~slide~slide-pack.3a55279942375e344a4b.js"></script><script defer="defer" src="build/vendors~index~index-pack~pretty~pretty-pack~slide~slide-pack.00ba21c360fe4ee91e15.js"></script><script defer="defer" src="build/pretty-pack.6e275e1bc24af120eb14.js"></script>
