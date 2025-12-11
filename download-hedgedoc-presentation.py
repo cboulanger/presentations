@@ -311,6 +311,8 @@ if __name__ == "__main__":
         "build/006708d6691753cfc46eec2dae88fbdafa22823a89194149d9f223050dc78998.woff",
         "build/4f319287827e35f841069eb471c092eccf97d2f7830aa4d8bd7301ded418bf49.ttf",
         "build/ae93165204442cdb2d226a4fb7a64b05ab3902cb223fff920a0ec86393e1a54e.woff",
+        "build/29.2a617e324a916bcabdb3.js",
+        "build/27.7be235cc2b7251d64a40.js",
         "build/MathJax/jax/input/TeX/config.js?V=2.7.9",
         "build/MathJax/jax/input/MathML/config.js?V=2.7.9",
         "build/MathJax/jax/output/HTML-CSS/config.js?V=2.7.9",
