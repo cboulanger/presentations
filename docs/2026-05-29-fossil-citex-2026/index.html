@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="  # Digging Up Citations: FOSSIL, a Dataset and Workflow for Reference Extraction in Law and the Hum" name="description"/>
+<base href="./"/>
+<title>Digging Up Citations: FOSSIL, a Dataset and Workflow for Reference Extraction in Law and the Humanities (Frankfurt 2026) - HedgeDoc</title>
+<link href="./icons/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="./icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="./icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="./icons/site.webmanifest" rel="manifest"/>
+<link color="#b51f08" href="./icons/safari-pinned-tab.svg" rel="mask-icon"/>
+<link href="./icons/favicon.ico" rel="shortcut icon"/>
+<meta content="HedgeDoc - Ideas grow better together" name="apple-mobile-web-app-title"/>
+<meta content="HedgeDoc - Ideas grow better together" name="application-name"/>
+<meta content="#b51f08" name="msapplication-TileColor"/>
+<meta content="./icons/browserconfig.xml" name="msapplication-config"/>
+<meta content="#b51f08" name="theme-color"/>
+<link href="./build/reveal.js/css/reveal.css" rel="stylesheet"/>
+<link href="./build/emojify.js/dist/css/basic/emojify.min.css" rel="stylesheet"/>
+<link href="build/font-pack.4362583c9249021b5028.css" rel="stylesheet"/><link href="build/2.15c517ea2148f55c8206.css" rel="stylesheet"/><link href="build/24.2fb0d01138de2df6de0a.css" rel="stylesheet"/><link href="build/slide-styles.f28b3cbe43b1ce05a8b8.css" rel="stylesheet"/><link href="build/1.1666d9d869a0532d9bce.css" rel="stylesheet"/><link href="build/slide.2f30402fe4a750f6ae6d.css" rel="stylesheet"/>
+<!-- For reveal.js theme -->
+<link href="./build/reveal.js/css/theme/moon.css" id="theme" rel="stylesheet"/>
+<!-- For syntax highlighting -->
+<link href="./build/reveal.js/lib/css/zenburn.css" rel="stylesheet"/>
+<!-- For overwrite reveal.js -->
+<link href="./css/slide.css" rel="stylesheet"/>
+<!-- Printing and PDF exports -->
+<script nonce="43ae86d5-d400-45bf-8ba3-0af72666583e">
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = 'build/reveal.js/' + (window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css');
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
+</head>
+<body translate="no">
+<div class="container">
+<div class="reveal">
+<div class="slides">
+
+# Digging Up Citations: FOSSIL, a Dataset and Workflow for Reference Extraction in Law and the Humanities
+
+Christian Boulanger (mpilhlt)
+Luca Foppiano (ScienciaLAB)
+
+&lt;span class=conference-label&gt;CiteX 2026 (May 29 2026, DIPF, Frankfurt, Main) &lt;/span&gt;
+
+
+Note:
+- Work in Progress
+- Luca could not join
+- concentrate on workflow and dataset design, work on dataset and performance improvements ongoing
+
+---
+
+### Problem
+
+- Existing citation extraction models assume structured bibliographies
+&lt;!-- .element: class="fragment" --&gt;
+- Law/humanities cite mainly in footnotes
+&lt;!-- .element: class="fragment" --&gt;
+- References mixed with commentary and cross-references
+&lt;!-- .element: class="fragment" --&gt;
+- High heterogeneity defeats rule or pattern-based parsing
+&lt;!-- .element: class="fragment" --&gt;
+
+---
+
+### The promise and challenges of LLMs
+
+- LLMs can handle heterogeneous footnotes, but...
+&lt;!-- .element: class="fragment" --&gt;
+- Unclear reliability: stochastic behavior, hallucinations
+&lt;!-- .element: class="fragment" --&gt;
+- Closed models: third-party dependency, weak reproducibility
+&lt;!-- .element: class="fragment" --&gt;
+- Open-weight models: hardware + cost; still slow
+&lt;!-- .element: class="fragment" --&gt;
+- Key bottleneck: few gold-standard SSH/law datasets
+&lt;!-- .element: class="fragment" --&gt;
+
+---
+
+### Existing SSH-oriented datasets
+
+| Name | Content | Limitations |
+| --- | --- | --- |
+| **CEX** | 112 English articles | Single-language, no footnotes |
+| **EXparser Gold Standard** | 100 German social-science documents | Single-language, few footnotes |
+| **LinkedBooks** | 40,000 refs (Venetian history) | Narrow domain |
+
+General limitation: limited footnote focus; no shared standard format
+
+---
+
+&lt;!-- I would remove this slide --&gt; 
+### New strategy: document routing
+
+- Zhu, Colavizza &amp; Romanello (2026): open-weight LLMs vs Grobid
+&lt;!-- .element: class="fragment" --&gt;
+- Fine-tuned LLMs handle distributin shift better
+&lt;!-- .element: class="fragment" --&gt;
+- Biggest gains: non-English + footnote-heavy documents
+&lt;!-- .element: class="fragment" --&gt;
+- Proposed: route documents between Grobid and adapted LLMs
+&lt;!-- .element: class="fragment" --&gt;
+- Our alternative: strengthen Grobid via targeted training
+&lt;!-- .element: class="fragment" --&gt;
+
+---
+
+### Challenges of law and SSH citation practices
+
+| Field | Where references live | Role of footnotes |
+| --- | --- | --- |
+| Natural sciences, most social sciences | Separate bibliography | Commentary only; often discouraged |
+| Law, humanities, older social sciences | Footnotes and/or bibliography | Commentary + context + references + cross-refs + locators |
+
+---
+
+![](./uploads/16834afd-ac38-4410-bd15-e32375c01677.png)
+
+---
+
+### Footnote content types
+
+1. Commentary only (no reference) -&gt; discarded
+&lt;!-- .element: class="fragment" --&gt;
+2. Biographical notes (often first page) -&gt; discarded
+&lt;!-- .element: class="fragment" --&gt;
+3. One or more cleanly separable references
+&lt;!-- .element: class="fragment" --&gt;
+4. Cross-references (e.g., “Ibid.”, “See Miller, n. 9, p. 5”)
+&lt;!-- .element: class="fragment" --&gt;
+5. Mixed content (any order), including signal words indicating citation intent
+&lt;!-- .element: class="fragment" --&gt;
+
+---
+
+### Contributions
+
+1. **PDF-TEI Editor**: production-ready web annotation tool
+&lt;!-- .element: class="fragment" --&gt;
+2. Documented **annotation workflow** (Editor + Grobid)
+&lt;!-- .element: class="fragment" --&gt;
+3. **FOSSIL**: open, multilingual dataset (96 articles, &gt;7,600 footnote references)
+&lt;!-- .element: class="fragment" --&gt;
+4. **Grobid specialised flavor** use case for law/humanities
+&lt;!-- .element: class="fragment" --&gt;
+
+---
+
+### PDF-TEI Editor
+
+
+- Open-source, collaborative TEI-XML annotation
+&lt;!-- .element: class="fragment" --&gt;
+- Synchronized PDF/XML view + TEI schema validation
+&lt;!-- .element: class="fragment" --&gt;
+- Role-based access control
+&lt;!-- .element: class="fragment" --&gt;
+- Pluggable extraction backends (Grobid, LLaMore)
+&lt;!-- .element: class="fragment" --&gt;
+- Versioning: branching, merging, change history with attribution
+&lt;!-- .element: class="fragment" --&gt;
+
+---
+
+&lt;img src=./uploads/9921051d-69f6-4491-9d7a-5fc3464ca502.png class="resize" /&gt;
+
+---
+
+### General workflow
+
+- Sources: openly licensed journals (DOAJ, Crossref)
+&lt;!-- .element: class="fragment" --&gt;
+- Excluded: non-derivative OA licenses
+&lt;!-- .element: class="fragment" --&gt;
+- 10 batches, annotated in 5 phases
+&lt;!-- .element: class="fragment" --&gt;
+
+---
+
+### Annotation workflow
+
+1. Pre-annotate with latest Grobid model
+&lt;!-- .element: class="fragment" --&gt;
+2. Correct (annotator 1) + verify (annotator 2)
+&lt;!-- .element: class="fragment" --&gt;
+3. Validate by senior reviewer
+&lt;!-- .element: class="fragment" --&gt;
+4. Update living annotation guide (tracked via GitHub issues)
+&lt;!-- .element: class="fragment" --&gt;
+5. Train + evaluate updated model
+&lt;!-- .element: class="fragment" --&gt;
+
+Note: 
+7 annotators total (2 senior authors, 4 DH students at University of Stuttgart, 1 reviewer).
+
+---
+
+### Inter-annotator agreement
+
+- 194 pairwise comparisons (96 documents)
+&lt;!-- .element: class="fragment" --&gt;
+- Krippendorff’s α: mean **0.917**, median **0.989**
+&lt;!-- .element: class="fragment" --&gt;
+- High reliability; clear learning curve across batches
+&lt;!-- .element: class="fragment" --&gt;
+
+---
+
+### The dataset
+
+- FOSSIL (Footnote-based Open-access SSH Scientific Instance Labels)
+&lt;!-- .element: class="fragment" --&gt;
+- Open corpus across disciplines, languages, and styles
+&lt;!-- .element: class="fragment" --&gt;
+- Designed for footnote-heavy law/humanities conventions
+&lt;!-- .element: class="fragment" --&gt;
+- Use cases: training / evaluation 
+&lt;!-- .element: class="fragment" --&gt;
+
+---
+
+### Key facts
+
+| | |
+| --- | --- |
+| **Selection** | 96 articles from 38 journals |
+| **Domains** | Law, humanities, history, social sciences |
+| **Publication dates** | 1959–2025 (mostly 2009+) |
+| **Languages** | English (84%), German (5%), Portuguese, Italian, French |
+| **Footnotes** | 2,400 blocks (~500 discursive, ~1,900 bibliographic) |
+| **References** | &gt;7,600 references (~100 per document) |
+| **Annotation format** | TEI subset, 3 layers: article / footnote / reference segmentation |
+
+---
+
+### Grobid specialization
+
+- Specialized processing “flavor” to replace models incrementally
+&lt;!-- .element: class="fragment" --&gt;
+- Maximizes reuse of the existing Grobid models
+&lt;!-- .element: class="fragment" --&gt;
+- Enables component-level evaluation
+&lt;!-- .element: class="fragment" --&gt;
+- Work in progress
+
+---
+
+![](./uploads/f7ac5691-4063-4107-bdff-5cd348c2ddd8.png)
+
+---
+
+### End-to-end evaluation
+
+- 4 law/humanities articles (same set used in [prior LLM-vs-Grobid study](https://cboulanger.github.io/presentations/2025-04-03-extracting-citation-data-from-law-humanities/single-page.html)) 
+&lt;!-- .element: class="fragment" --&gt;
+- Compare: default Grobid vs **footnotes-ref** flavor
+&lt;!-- .element: class="fragment" --&gt;
+- Gold standard: manually annotated references
+&lt;!-- .element: class="fragment" --&gt;
+
+---
+
+### Metrics: token-level F1
+
+- Footnote matching 0.19 -&gt; 0.91 :green_apple: 
+&lt;!-- .element: class="fragment" --&gt;
+- References (within footnotes) matching 0.11 -&gt; 0.59 :yellow_heart: 
+&lt;!-- .element: class="fragment" --&gt;
+- Citation fields (see next) :red_circle: 
+&lt;!-- .element: class="fragment" --&gt;
+
+---
+
+![](./uploads/1c72055b-b1e8-4b2f-9e67-412fbdb63b4e.png)
+
+Per-field F1: journal title, author surname, publication date, using  fuzzy matching (Levenshtein ≥ 0.8) and Hungarian matching for reference alignment (LLaMore)
+
+---
+
+### Citation field extraction
+
+- The citation-parser still using the standard Grobid model
+&lt;!-- .element: class="fragment" --&gt;
+- Specialized flavor boosts recall:
+  - author surnames: 0.23 → 0.64
+  - publication dates: 0.21 → 0.72
+&lt;!-- .element: class="fragment" --&gt;
+- Non-dates numeric values: volume, issue, pages mixed with cross-reference numbers 
+&lt;!-- .element: class="fragment" --&gt;
+
+---
+
+### Results
+
+- Domain specialization markedly improves footnote citation extraction
+&lt;!-- .element: class="fragment" --&gt;
+- Citation and reference segmentation to be completed, hindering field-base results
+&lt;!-- .element: class="fragment" --&gt;
+- Dataset + workflow are needed resources in SSH 
+&lt;!-- .element: class="fragment" --&gt;
+- Model specialization: seamless integration in Grobid as baseline
+&lt;!-- .element: class="fragment" --&gt;
+
+---
+
+## Conclusion
+
+- **FOSSIL**: first openly licensed resource of this scale for legal/SSH footnote references
+&lt;!-- .element: class="fragment" --&gt;
+- End-to-end results: large gains, but substantial headroom
+&lt;!-- .element: class="fragment" --&gt;
+- Hard cases remain: cross-references and mixed-content footnotes
+&lt;!-- .element: class="fragment" --&gt;
+
+---
+
+## Future work
+
+- Extend FOSSIL: more languages, legal traditions, historical periods
+&lt;!-- .element: class="fragment" --&gt;
+- Cross-reference resolution (still largely open)
+&lt;!-- .element: class="fragment" --&gt;
+- Explore small fine-tuning adapter and end-to-end neural pipelines across:
+  - article segmentation
+  - reference segmentation
+  - citation parsing
+&lt;!-- .element: class="fragment" --&gt;
+
+---
+
+**Thank you, let's collaborate!**
+
+![](./uploads/3dbefe18-899c-452d-904d-d7dd8035fa4d.png)
+
+We thank Dr. Anselm Küsters (Stuttgart University) and student assistants Mengjiao Li, Johanna Sandfort, Judith Schulze, and Marcia Sperber for their invaluable contribution to FOSSIL.
+
+---
+
+&lt;!-- Custom styles for this presentation --&gt;
+
+&lt;style type="text/css"&gt;
+    
+    /* adapt some font sizes */
+    h1.raw{font-size: 4vw;}
+    h2.raw{font-size: 4vw;}
+    h3.raw{font-size: 3vw;}
+    .reveal section {font-size: 2vw;}
+
+    /* make title text readable against dark background */
+    section.present:first-of-type p,
+    section.present:first-of-type h1.raw {
+        color: white; 
+        text-shadow: 4px 4px 6px black;
+    }
+
+    /* same for title page logos*/
+    img.logo { 
+        display:none 
+    }
+    .reveal section img.logo {
+        display: inline;
+        border: none;
+        background: none;
+        box-shadow:none;
+        width:30vw;
+    }
+
+    /* set the background image
+     * requires &lt;!-- .slide: data-background="" --&gt; */
+    .slide-background-content::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url("");
+        background-size: cover;
+        background-position: center;
+    }
+
+    /* all backgrounds except the title page 
+     * have an opacity 0f 30% */
+    .backgrounds &gt; .slide-background:not(:first-child) .slide-background-content {
+        opacity: 0.3;
+    }
+  
+
+    /* place two logos on the bottom left, center and right of all pages except the title page */
+    .backgrounds &gt; .slide-background .slide-background-content {
+        position: relative;
+        background-image: url('./uploads/7296f190-6075-4f54-8ce3-f94a47c9e5f8.png'), url('./uploads/6661a7f6-c6c1-40dc-8bd0-b058738c9829.png'); 
+        background-position: left 30px bottom 30px,  right 100px bottom 50px;
+        background-repeat: no-repeat;
+        background-size: 25%, 20%;
+        opacity: 0.8;
+    }
+
+    
+    /* resize images dynamically */
+    img.resize {
+        max-height: calc(100vh - 200px);
+        width: auto;
+    }
+
+    /* blockquotes */
+    .reveal blockquote {
+        display: block;
+        position: relative;
+        text-align: left;
+        width: 80%;
+        margin: 20px auto;
+        padding: 10px 10px 10px 10px;
+        font-style: italic;
+        background: rgba(0, 0, 0, 0.05);
+        box-shadow: 0px 0px 2px rgb(0, 0, 0);
+    }
+
+    .reveal blockquote &gt; p {
+        font-size: clamp(0.3em, 1fr, 1.2em);
+        line-height: 1.2; 
+        overflow-wrap: break-word; 
+    }
+
+    /* images */
+    .reveal section img {
+        margin: 15px 0px;
+        background: none;
+        border: none;
+        box-shadow: none;
+    }
+
+    /* lists */
+    section ul, section ol {
+        display: block !important
+    }
+    section li {
+        margin-bottom: 0.5em;
+    }
+
+    /* no scrollbars on graphviz diagrams */
+    section pre.graphviz {
+        overflow: hidden;
+    }
+    
+    /* image captions */
+    section .caption {
+        font-size: 2vw;
+    }
+    
+    /* add a pulse effect to links */
+    .reveal a:not(:hover) img {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: #2a76dd;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.55); 
+      animation: pulsate 1s ease-out infinite;
+    }
+    @-webkit-keyframes pulsate {
+        0%   { box-shadow: 0 0 5px rgba(0, 0, 0, 0.55); }
+        50%  { box-shadow: 0 0 17px rgba(0, 0, 0, 0.55); }
+        100% { box-shadow: 0 0 5px rgba(0, 0, 0, 0.55); }
+    }
+  
+  
+  .conference-label {
+    opacity: .6
+  }
+
+    /**
+     *  Slide Layouts 
+     **/
+
+    /* Two columns with header and footer */
+    .slides section.two-columns-header-footer &gt; div  {
+        display: grid;
+        height: 120vh;
+        grid-template-areas:
+            "header header"
+            "left right"
+            "footer footer";
+        grid-template-rows: 20% fit-content(70%) 10%; 
+        grid-template-columns: fit-content(1fr) 1fr;
+        grid-gap: 30px;
+    }
+    .slides section.two-columns-header-footer &gt; div &gt; h2,
+    .slides section.two-columns-header-footer &gt; div &gt; h3,
+    .slides section.two-columns-header-footer &gt; div &gt; h4 {
+        grid-area: header;
+        position: relative;
+        /*top: -5vh;*/ 
+    }
+    
+    .slides section.two-columns-header-footer .header {
+        grid-area: header;
+    }
+    
+    .slides section.two-columns-header-footer .left {
+        grid-area: left;
+        align-self: center;
+    }
+    .slides section.two-columns-header-footer .right {
+        grid-area: right;
+    }
+    .slides section.two-columns-header-footer .footer {
+        grid-area: footer;
+    }
+    
+    /* layout with two images and captions */
+    section div.two-images-with-captions {
+        display: grid; 
+        grid-template-rows: auto; 
+        grid-template-columns: auto auto; 
+        grid-gap: 10px; 
+    }
+
+&lt;/style&gt;</div>
+</div>
+<div id="meta">{"title":"Digging Up Citations: FOSSIL, a Dataset and Workflow for Reference Extraction in Law and the Humanities (Frankfurt 2026)","lang":"en","author":"Christian Boulanger, Luca Foppiano","type":"slide","tags":"presentation","slideOptions":{"transition":"slide","theme":"moon"}}</div>
+<div class="footer">
+<div class="unselectable hidden-print gray-font">
+<small>
+<span>
+<span class="ui-lastchangeuser"> <i class="ui-user-icon small" data-placement="right" data-toggle="tooltip" style="background-image: url(./user/boulanger%40lhlt.mpg.de/avatar.svg);" title="boulanger@lhlt.mpg.de"></i></span>
+                            
+                             <span class="text-uppercase ui-status-lastchange"></span>
+<span class="ui-lastchange text-uppercase" data-createtime="Wed May 13 2026 13:20:30 GMT+0000 (Coordinated Universal Time)" data-updatetime="Fri May 29 2026 15:27:54 GMT+0000 (Coordinated Universal Time)"></span>
+</span>
+<span class="pull-right">96 views <a class="ui-edit" href="#" title="Edit this note"><i class="fa fa-fw fa-pencil"></i></a><a class="ui-print" href="" title="Open print view"><i class="fa fa-fw fa-print"></i></a></span>
+<br/>
+</small>
+</div>
+</div>
+</div>
+<script src="./js/mathjax-config-extra.js"></script>
+<script defer="" src="./build/MathJax/MathJax.js"></script>
+<script defer="" src="./build/MathJax/config/TeX-AMS-MML_HTMLorMML.js"></script>
+<script defer="" src="./build/MathJax/config/Safe.js"></script>
+<script src="config"></script><script defer="defer" src="build/vendors~cover~cover-pack~index~index-pack~pretty~pretty-pack~slide~slide-pack.bdd237381b0ec864bb3b.js"></script><script defer="defer" src="build/vendors~index~index-pack~pretty~pretty-pack~slide~slide-pack.c0721a1813aece9ab948.js"></script><script defer="defer" src="build/slide-pack.3dba9be34f3f3638630c.js"></script>
+</body>
+</html>
